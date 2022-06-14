@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kaartje
+  namespace: default
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: kaartje
+  template:
+    metadata:
+      labels:
+        app: kaartje
+    spec:
+      containers:
+        - name: kaartje
+          image: kaartje:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
+          resources:
+            limits:
+              memory: 512Mi
+              cpu: '1'
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kaartje-balancer
+spec:
+  selector:
+    app: kaartje
+  ports:
+    - protocol: TCP
+      port: 8000 # The port to expose to the outside
+      targetPort: 8080 # The port the application is running on in the pods
+  type: LoadBalancer
+  sessionAffinity: ClientIP
