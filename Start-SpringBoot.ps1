@@ -4,7 +4,7 @@ docker run `
     --name kaartje-app-server `
     --rm `
     --env DB_HOST=kaartje-db-server `
-    --env DB_PORT=8080 `
+    --env DB_PORT=5432 `
     --env DB_NAME=kaartje `
     --env DB_USER=intec `
     --env DB_PASSWORD=intec `
