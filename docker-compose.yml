@@ -1,0 +1,53 @@
+version: "3.9"
+services:
+
+  kaartje_dev_appserver:
+    build: .
+    ports:
+      - "80:8080"
+    depends_on:
+      - kaartje_dev_database_server
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://kaartje_dev_database_server:5432/kaartjedb
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    networks:
+      - kaartje_development_network
+    volumes:
+      - kaartje_application_volume:/var/lib/kaartje
+
+  kaartje_dev_database_server:
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=kaartjedb
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - kaartje_development_network
+    volumes:
+      - kaartje_database_volume:/var/lib/mysql
+
+  kaartje_dev_database_admin:
+    image: adminer:latest
+    restart: always
+    ports:
+      - "9090:8080"
+    networks:
+      - kaartje_development_network
+
+networks:
+  kaartje_production_network:
+  kaartje_development_network:
+
+
+volumes:
+  kaartje_database_volume: {}
+  kaartje_application_volume: {}
