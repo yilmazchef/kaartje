@@ -2,7 +2,6 @@ package be.intecbrussel.views;
 
 import be.intecbrussel.data.entity.User;
 import be.intecbrussel.security.AuthenticatedUser;
-import be.intecbrussel.views.chat.ChatView;
 import be.intecbrussel.views.departments.DepartmentsView;
 import be.intecbrussel.views.home.HomeView;
 import be.intecbrussel.views.register.RegisterView;
@@ -132,7 +131,7 @@ public class MainLayout extends AppLayout {
     }
 
     private MenuItemInfo[] createMenuItems() {
-        return new MenuItemInfo[]{ //
+        return new MenuItemInfo[] { //
                 new MenuItemInfo("Home", "la la-list", HomeView.class), //
 
                 new MenuItemInfo("Tickets", "la la-sticky-note", TicketsView.class), //
@@ -142,8 +141,6 @@ public class MainLayout extends AppLayout {
                 new MenuItemInfo("Departments", "la la-boxes", DepartmentsView.class), //
 
                 new MenuItemInfo("Register", "la la-user", RegisterView.class), //
-
-                new MenuItemInfo("Chat", "la la-comments", ChatView.class), //
 
         };
     }

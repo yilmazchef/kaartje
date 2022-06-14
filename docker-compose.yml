@@ -33,7 +33,7 @@ services:
     networks:
       - kaartje_development_network
     volumes:
-      - kaartje_database_volume:/var/lib/mysql
+      - kaartje_database_volume:/var/lib/postgresql/data
 
   kaartje_dev_database_admin:
     image: adminer:latest
