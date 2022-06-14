@@ -52,13 +52,13 @@ Once the JAR file is built, you can run it using
 To build the Dockerized version of the project, run
 
 ```
-docker build . -t kaartje:latest
+docker build -t your_dockerhub_username/kaartje:latest .
 ```
 
 Once the Docker image is correctly built, you can test it locally using
 
 ```
-docker run -p 8080:8080 kaartje:latest
+docker run -p 8080:8080 -d your_dockerhub_username/kaartje:latest
 ```
 
 
