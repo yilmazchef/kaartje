@@ -4,7 +4,7 @@ Write-Host "Kaartje app server is running"
 docker run `
     --name kaartje-app-server `
     --publish 8888:8080 `
-    --env DB_HOST=localhost `
+    --env DB_HOST=kaartje-db-server `
     --env DB_PORT=5432 `
     --env DB_NAME=kaartje `
     --env DB_USER=intec `
