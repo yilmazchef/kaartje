@@ -14,18 +14,12 @@ import com.vaadin.flow.component.avatar.Avatar;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.contextmenu.ContextMenu;
 import com.vaadin.flow.component.dependency.NpmPackage;
-import com.vaadin.flow.component.html.Anchor;
-import com.vaadin.flow.component.html.Footer;
-import com.vaadin.flow.component.html.H1;
-import com.vaadin.flow.component.html.H2;
-import com.vaadin.flow.component.html.Header;
-import com.vaadin.flow.component.html.ListItem;
-import com.vaadin.flow.component.html.Nav;
-import com.vaadin.flow.component.html.Span;
-import com.vaadin.flow.component.html.UnorderedList;
+import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.auth.AccessAnnotationChecker;
+
+import java.text.MessageFormat;
 import java.util.Optional;
 
 /**
@@ -131,7 +125,7 @@ public class MainLayout extends AppLayout {
     }
 
     private MenuItemInfo[] createMenuItems() {
-        return new MenuItemInfo[] { //
+        return new MenuItemInfo[]{ //
                 new MenuItemInfo("Home", "la la-list", HomeView.class), //
 
                 new MenuItemInfo("Tickets", "la la-sticky-note", TicketsView.class), //
@@ -153,16 +147,20 @@ public class MainLayout extends AppLayout {
         if (maybeUser.isPresent()) {
             User user = maybeUser.get();
 
-            Avatar avatar = new Avatar(user.getName(), user.getProfilePictureUrl());
+            final var fullName = MessageFormat.format("{0} {1}", user.getFirstName(), user.getLastName());
+            Avatar avatar = new Avatar(
+                    fullName
+                    , user.getProfilePictureUrl()
+            );
             avatar.addClassNames("me-xs");
 
-            ContextMenu userMenu = new ContextMenu(avatar);
+            final var userMenu = new ContextMenu(avatar);
             userMenu.setOpenOnClick(true);
             userMenu.addItem("Logout", e -> {
                 authenticatedUser.logout();
             });
 
-            Span name = new Span(user.getName());
+            Span name = new Span(fullName);
             name.addClassNames("font-medium", "text-s", "text-secondary");
 
             layout.add(avatar, name);

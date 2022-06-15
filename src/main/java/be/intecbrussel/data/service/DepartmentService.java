@@ -13,7 +13,6 @@ public class DepartmentService {
 
     private final DepartmentRepository repository;
 
-    @Autowired
     public DepartmentService(DepartmentRepository repository) {
         this.repository = repository;
     }

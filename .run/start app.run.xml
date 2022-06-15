@@ -1,0 +1,22 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="start app" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <option name="ACTIVE_PROFILES" />
+    <envs>
+      <env name="DB_NAME" value="kaartjedb" />
+      <env name="DB_HOST" value="localhost" />
+      <env name="DB_PORT" value="53932" />
+      <env name="DB_USER" value="postgres" />
+      <env name="DB_PASSWORD" value="postgres" />
+    </envs>
+    <module name="kaartje" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="be.intecbrussel.Application" />
+    <extension name="software.aws.toolkits.jetbrains.core.execution.JavaAwsConnectionExtension">
+      <option name="credential" />
+      <option name="region" />
+      <option name="useCurrentConnection" value="false" />
+    </extension>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

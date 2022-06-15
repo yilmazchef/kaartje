@@ -1,10 +1,18 @@
 package be.intecbrussel.data.service;
 
 import be.intecbrussel.data.entity.User;
-import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-public interface UserRepository extends JpaRepository<User, UUID> {
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import java.util.Optional;
+import java.util.UUID;
 
-    User findByUsername(String username);
+public interface UserRepository extends JpaRepository<User, UUID>, JpaSpecificationExecutor<User> {
+
+    Optional<User> findByUsername(@NotEmpty @Email final String username);
+
+    User getByUsername(@NotEmpty @Email final String username);
+
 }

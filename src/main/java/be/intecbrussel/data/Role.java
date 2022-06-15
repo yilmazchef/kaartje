@@ -8,5 +8,5 @@ public enum Role {
     TEACHER, 
     LEADER, 
     MANAGER, 
-    ADMIN;
+    ADMIN
 }

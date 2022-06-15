@@ -46,8 +46,9 @@ services:
 networks:
   pronet:
   devnet:
+    driver: bridge
 
 
 volumes:
-  dbvol: {}
-  devvol: {}
+  dbvol: { }
+  devvol: { }

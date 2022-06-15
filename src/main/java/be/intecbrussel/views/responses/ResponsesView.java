@@ -28,11 +28,12 @@ import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.spring.data.VaadinSpringDataHelpers;
-import java.util.Optional;
-import java.util.UUID;
-import javax.annotation.security.PermitAll;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+
+import javax.annotation.security.PermitAll;
+import java.util.Optional;
+import java.util.UUID;
 
 @PageTitle("Responses")
 @Route(value = "responses/:responseID?/:action?(edit)", layout = MainLayout.class)
@@ -96,16 +97,16 @@ public class ResponsesView extends LitTemplate implements HasStyle, BeforeEnterO
         grid.addColumn(Response::getScore).setHeader("Score").setAutoWidth(true);
         grid.addColumn(Response::getTags).setHeader("Tags").setAutoWidth(true);
         LitRenderer<Response> isActiveRenderer = LitRenderer.<Response>of(
-                "<vaadin-icon icon='vaadin:${item.icon}' style='width: var(--lumo-icon-size-s); height: var(--lumo-icon-size-s); color: ${item.color};'></vaadin-icon>")
-                .withProperty("icon", isActive -> isActive.isIsActive() ? "check" : "minus").withProperty("color",
-                        isActive -> isActive.isIsActive()
+                        "<vaadin-icon icon='vaadin:${item.icon}' style='width: var(--lumo-icon-size-s); height: var(--lumo-icon-size-s); color: ${item.color};'></vaadin-icon>")
+                .withProperty("icon", isActive -> isActive.getIsDeleted() ? "check" : "minus").withProperty("color",
+                        isActive -> isActive.getIsDeleted()
                                 ? "var(--lumo-primary-text-color)"
                                 : "var(--lumo-disabled-text-color)");
 
         grid.addColumn(isActiveRenderer).setHeader("Is Active").setAutoWidth(true);
 
         grid.setItems(query -> responseService.list(
-                PageRequest.of(query.getPage(), query.getPageSize(), VaadinSpringDataHelpers.toSpringDataSort(query)))
+                        PageRequest.of(query.getPage(), query.getPageSize(), VaadinSpringDataHelpers.toSpringDataSort(query)))
                 .stream());
         grid.addThemeVariants(GridVariant.LUMO_NO_BORDER);
         grid.setHeightFull();

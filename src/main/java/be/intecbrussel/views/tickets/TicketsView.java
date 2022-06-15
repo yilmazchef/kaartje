@@ -29,15 +29,16 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.spring.data.VaadinSpringDataHelpers;
 import elemental.json.Json;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.web.util.UriUtils;
+
+import javax.annotation.security.PermitAll;
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.Optional;
 import java.util.UUID;
-import javax.annotation.security.PermitAll;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.web.util.UriUtils;
 
 @PageTitle("Tickets")
 @Route(value = "tickets/:ticketID?/:action?(edit)", layout = MainLayout.class)
@@ -107,16 +108,16 @@ public class TicketsView extends LitTemplate implements HasStyle, BeforeEnterObs
         grid.addColumn(Ticket::getUpdatedAt).setHeader("Updated At").setAutoWidth(true);
         grid.addColumn(Ticket::getStatus).setHeader("Status").setAutoWidth(true);
         LitRenderer<Ticket> isActiveRenderer = LitRenderer.<Ticket>of(
-                "<vaadin-icon icon='vaadin:${item.icon}' style='width: var(--lumo-icon-size-s); height: var(--lumo-icon-size-s); color: ${item.color};'></vaadin-icon>")
-                .withProperty("icon", isActive -> isActive.isIsActive() ? "check" : "minus").withProperty("color",
-                        isActive -> isActive.isIsActive()
+                        "<vaadin-icon icon='vaadin:${item.icon}' style='width: var(--lumo-icon-size-s); height: var(--lumo-icon-size-s); color: ${item.color};'></vaadin-icon>")
+                .withProperty("icon", isDeleted -> isActive.getValue() ? "check" : "minus").withProperty("color",
+                        isActive -> isActive.getIsDeleted()
                                 ? "var(--lumo-primary-text-color)"
                                 : "var(--lumo-disabled-text-color)");
 
         grid.addColumn(isActiveRenderer).setHeader("Is Active").setAutoWidth(true);
 
         grid.setItems(query -> ticketService.list(
-                PageRequest.of(query.getPage(), query.getPageSize(), VaadinSpringDataHelpers.toSpringDataSort(query)))
+                        PageRequest.of(query.getPage(), query.getPageSize(), VaadinSpringDataHelpers.toSpringDataSort(query)))
                 .stream());
         grid.addThemeVariants(GridVariant.LUMO_NO_BORDER);
         grid.setHeightFull();

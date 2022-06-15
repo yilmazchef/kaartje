@@ -4,14 +4,21 @@ import lombok.*;
 import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.Type;
+import org.hibernate.validator.constraints.URL;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotNull;
-import java.util.Set;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 // LOMBOK
+
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -22,8 +29,7 @@ import java.util.UUID;
 @Accessors(chain = true)
 // JPA & HIBERNATE
 @Entity
-@Table(name = "departments")
-public class Department {
+public class Board {
 
     @ToString.Include
     @Id
@@ -37,9 +43,18 @@ public class Department {
         this.isDeleted = true;
     }
 
-    @NotNull
+    @ToString.Include
     String title;
 
+    @Lob
+    @URL
+    String attachment;
+
+    @ToString.Include
+    @NotNull
+    String content;
+
+    @ToString.Include
     @Email
     @NotNull
     String createdBy;
@@ -48,10 +63,14 @@ public class Department {
     @NotNull
     String updatedBy;
 
-    @ElementCollection
-    Set<String> alias;
+    @ToString.Include
+    @FutureOrPresent
+    LocalDateTime createdAt;
 
-    @OneToOne
-    User manager;
+    @FutureOrPresent
+    LocalDateTime updatedAt;
+
+    @ToString.Include
+    String status;
 
 }

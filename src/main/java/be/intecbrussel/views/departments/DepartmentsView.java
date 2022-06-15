@@ -21,11 +21,12 @@ import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.spring.data.VaadinSpringDataHelpers;
-import java.util.Optional;
-import java.util.UUID;
-import javax.annotation.security.PermitAll;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+
+import javax.annotation.security.PermitAll;
+import java.util.Optional;
+import java.util.UUID;
 
 @PageTitle("Departments")
 @Route(value = "departments/:departmentID?/:action?(edit)", layout = MainLayout.class)
@@ -77,10 +78,9 @@ public class DepartmentsView extends LitTemplate implements HasStyle, BeforeEnte
         grid.addColumn(Department::getCreatedBy).setHeader("Created By").setAutoWidth(true);
         grid.addColumn(Department::getUpdatedBy).setHeader("Updated By").setAutoWidth(true);
         grid.addColumn(Department::getAlias).setHeader("Alias").setAutoWidth(true);
-        grid.addColumn(Department::getContactEmail).setHeader("Contact Email").setAutoWidth(true);
-        grid.addColumn(Department::getContactPhone).setHeader("Contact Phone").setAutoWidth(true);
+        grid.addColumn(Department::getManager).setHeader("Manager").setAutoWidth(true);
         grid.setItems(query -> departmentService.list(
-                PageRequest.of(query.getPage(), query.getPageSize(), VaadinSpringDataHelpers.toSpringDataSort(query)))
+                        PageRequest.of(query.getPage(), query.getPageSize(), VaadinSpringDataHelpers.toSpringDataSort(query)))
                 .stream());
         grid.addThemeVariants(GridVariant.LUMO_NO_BORDER);
         grid.setHeightFull();

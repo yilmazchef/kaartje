@@ -13,7 +13,6 @@ public class ResponseService {
 
     private final ResponseRepository repository;
 
-    @Autowired
     public ResponseService(ResponseRepository repository) {
         this.repository = repository;
     }

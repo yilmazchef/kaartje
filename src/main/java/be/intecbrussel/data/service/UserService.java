@@ -1,19 +1,18 @@
 package be.intecbrussel.data.service;
 
 import be.intecbrussel.data.entity.User;
-import java.util.Optional;
-import java.util.UUID;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UserService {
 
     private final UserRepository repository;
 
-    @Autowired
     public UserService(UserRepository repository) {
         this.repository = repository;
     }

@@ -1,14 +1,13 @@
 package be.intecbrussel.views.register;
 
-import be.intecbrussel.data.entity.SamplePerson;
-import be.intecbrussel.data.service.SamplePersonService;
+import be.intecbrussel.data.entity.User;
+import be.intecbrussel.data.service.UserService;
 import be.intecbrussel.views.MainLayout;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.customfield.CustomField;
-import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.dependency.Uses;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Div;
@@ -29,19 +28,23 @@ import com.vaadin.flow.server.auth.AnonymousAllowed;
 @Uses(Icon.class)
 public class RegisterView extends Div {
 
-    private TextField firstName = new TextField("First name");
-    private TextField lastName = new TextField("Last name");
-    private EmailField email = new EmailField("Email address");
-    private DatePicker dateOfBirth = new DatePicker("Birthday");
-    private PhoneNumberField phone = new PhoneNumberField("Phone number");
-    private TextField occupation = new TextField("Occupation");
+    private final TextField firstName = new TextField( "First name");
+    private final TextField lastName = new TextField("Last name");
+    private final EmailField email = new EmailField("Email address");
+    private final PhoneNumberField phone = new PhoneNumberField("Phone number");
+    private final TextField occupation = new TextField("Occupation");
 
-    private Button cancel = new Button("Cancel");
-    private Button save = new Button("Save");
+    private final Button cancel = new Button("Cancel");
+    private final Button save = new Button("Save");
 
-    private Binder<SamplePerson> binder = new Binder<>(SamplePerson.class);
+    private final Binder<User> binder = new Binder<>(User.class);
 
-    public RegisterView(SamplePersonService personService) {
+    private final UserService userService;
+
+    public RegisterView(final UserService userService) {
+
+        this.userService = userService;
+
         addClassName("register-view");
 
         add(createTitle());
@@ -53,24 +56,24 @@ public class RegisterView extends Div {
 
         cancel.addClickListener(e -> clearForm());
         save.addClickListener(e -> {
-            personService.update(binder.getBean());
+            userService.update(binder.getBean());
             Notification.show(binder.getBean().getClass().getSimpleName() + " details stored.");
             clearForm();
         });
     }
 
     private void clearForm() {
-        binder.setBean(new SamplePerson());
+        binder.setBean(new User());
     }
 
     private Component createTitle() {
-        return new H3("Personal information");
+        return new H3("User information");
     }
 
     private Component createFormLayout() {
         FormLayout formLayout = new FormLayout();
         email.setErrorMessage("Please enter a valid email address");
-        formLayout.add(firstName, lastName, dateOfBirth, phone, email, occupation);
+        formLayout.add(firstName, lastName, phone, email, occupation);
         return formLayout;
     }
 
@@ -84,8 +87,8 @@ public class RegisterView extends Div {
     }
 
     private static class PhoneNumberField extends CustomField<String> {
-        private ComboBox<String> countryCode = new ComboBox<>();
-        private TextField number = new TextField();
+        private final ComboBox<String> countryCode = new ComboBox<>();
+        private final TextField number = new TextField();
 
         public PhoneNumberField(String label) {
             setLabel(label);
@@ -104,11 +107,7 @@ public class RegisterView extends Div {
 
         @Override
         protected String generateModelValue() {
-            if (countryCode.getValue() != null && number.getValue() != null) {
-                String s = countryCode.getValue() + " " + number.getValue();
-                return s;
-            }
-            return "";
+            return countryCode.getValue() != null && number.getValue() != null ? (countryCode.getValue() + " " + number.getValue()) : ("");
         }
 
         @Override
