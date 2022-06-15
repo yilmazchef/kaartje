@@ -1,5 +1,12 @@
 package be.intecbrussel.data;
 
 public enum Role {
-    USER, ADMIN;
+    GUEST, 
+    USER, 
+    EDITOR, 
+    STUDENT, 
+    TEACHER, 
+    LEADER, 
+    MANAGER, 
+    ADMIN;
 }

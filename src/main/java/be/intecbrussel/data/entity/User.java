@@ -1,6 +1,15 @@
 package be.intecbrussel.data.entity;
 
 import be.intecbrussel.data.Role;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.experimental.FieldDefaults;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Set;
 import javax.persistence.ElementCollection;
@@ -13,59 +22,34 @@ import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.URL;
 
+// LOMBOK
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString(onlyExplicitlyIncluded = true, callSuper = true)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
+// LOMBOK -> EXPERIMENTAL
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@Accessors(fluent = true)
+// JPA & HIBERNATE
 @Entity
 @Table(name = "application_user")
 public class User extends AbstractEntity {
 
-    private String username;
-    private String name;
+    String username;
+
+    
+    String name;
     @JsonIgnore
-    private String hashedPassword;
+    String hashedPassword;
+    
     @Enumerated(EnumType.STRING)
     @ElementCollection(fetch = FetchType.EAGER)
-    private Set<Role> roles;
+    Set<Role> roles;
+    
     // @Lob
     @URL
-    private String profilePictureUrl;
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getHashedPassword() {
-        return hashedPassword;
-    }
-
-    public void setHashedPassword(String hashedPassword) {
-        this.hashedPassword = hashedPassword;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
-
-    public String getProfilePictureUrl() {
-        return profilePictureUrl;
-    }
-
-    public void setProfilePictureUrl(String profilePictureUrl) {
-        this.profilePictureUrl = profilePictureUrl;
-    }
+    String profilePictureUrl;
 
 }

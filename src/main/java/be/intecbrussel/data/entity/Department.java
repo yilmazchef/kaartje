@@ -2,51 +2,32 @@ package be.intecbrussel.data.entity;
 
 import javax.persistence.Entity;
 
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+// LOMBOK
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString(onlyExplicitlyIncluded = true, callSuper = true)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true, callSuper = true)
+// LOMBOK -> EXPERIMENTAL
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@Accessors(fluent = true)
+// JPA & HIBERNATE
 @Entity
 public class Department extends AbstractEntity {
 
-    private String title;
-    private String createdBy;
-    private String updatedBy;
-    private String alias;
-    private String contactEmail;
-    private String contactPhone;
-
-    public String getTitle() {
-        return title;
-    }
-    public void setTitle(String title) {
-        this.title = title;
-    }
-    public String getCreatedBy() {
-        return createdBy;
-    }
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
-    public String getUpdatedBy() {
-        return updatedBy;
-    }
-    public void setUpdatedBy(String updatedBy) {
-        this.updatedBy = updatedBy;
-    }
-    public String getAlias() {
-        return alias;
-    }
-    public void setAlias(String alias) {
-        this.alias = alias;
-    }
-    public String getContactEmail() {
-        return contactEmail;
-    }
-    public void setContactEmail(String contactEmail) {
-        this.contactEmail = contactEmail;
-    }
-    public String getContactPhone() {
-        return contactPhone;
-    }
-    public void setContactPhone(String contactPhone) {
-        this.contactPhone = contactPhone;
-    }
+    String title;
+    String createdBy;
+    String updatedBy;
+    String alias;
+    String contactEmail;
+    String contactPhone;
 
 }
