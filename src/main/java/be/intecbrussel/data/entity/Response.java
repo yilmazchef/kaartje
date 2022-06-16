@@ -3,11 +3,17 @@ package be.intecbrussel.data.entity;
 import lombok.*;
 import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -16,14 +22,14 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(onlyExplicitlyIncluded = true, callSuper = true)
+@ToString(onlyExplicitlyIncluded = true)
 // LOMBOK -> EXPERIMENTAL
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Accessors(chain = true)
 // JPA & HIBERNATE
 @Entity
 @Table(name = "responses")
-public class Response  {
+public class Response {
 
     @EqualsAndHashCode.Include
     @ToString.Include
@@ -43,10 +49,10 @@ public class Response  {
     @Email
     String createdBy;
 
-    @FutureOrPresent
+    @CreationTimestamp
     LocalDateTime createdAt;
 
-    @FutureOrPresent
+    @UpdateTimestamp
     LocalDateTime updatedAt;
 
     @Column(nullable = false)
@@ -64,7 +70,7 @@ public class Response  {
 
     @ElementCollection
     @CollectionTable(name = "tags")
-    Set<String> tags = new java.util.LinkedHashSet<>();
+    Set<String> tags = new HashSet<>();
 
     public Response addTag(@NotNull final String tag) {
         this.getTags().add(tag);
@@ -79,5 +85,48 @@ public class Response  {
     @ManyToOne
     @JoinColumn(name = "ticket_id")
     Ticket ticket;
+
+    @PrePersist
+    void onCreate() {
+
+        if (this.tags == null) {
+            this.tags = new HashSet<>();
+            this.getTags().add("default");
+        }
+
+        if (this.score == null) {
+            this.score = 0f;
+        }
+
+        if (this.priority == null) {
+            this.priority = 1;
+        }
+
+        if (this.isDeleted == null) {
+            this.isDeleted = false;
+        }
+
+    }
+
+    @PreUpdate
+    void onUpdate() {
+
+        if (this.tags == null) {
+            this.tags = new HashSet<>();
+            this.getTags().add("default");
+        }
+
+        if (this.score == null) {
+            this.score = 0f;
+        }
+
+        if (this.priority == null) {
+            this.priority = 1;
+        }
+
+        if (this.isDeleted == null) {
+            this.isDeleted = false;
+        }
+    }
 
 }

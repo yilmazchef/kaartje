@@ -37,7 +37,9 @@ public class DataGenerator {
             final var user = new User()
                     .setFirstName("John")
                     .setLastName("Normal")
-                    .setUsername("user")
+                    .setUsername("user@intecbrussel.be")
+                    .setPhone("+324781234567")
+                    .setIsDeleted(false)
                     .setHashedPassword(passwordEncoder.encode("user"))
                     .setProfilePictureUrl(
                             "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=128&h=128&q=80")
@@ -47,15 +49,15 @@ public class DataGenerator {
 
             final var admin = new User()
                     .setFirstName("Emma Powerful")
-                    .setUsername("admin")
+                    .setUsername("admin@intecbrussel.be")
+                    .setPhone("+324781234567")
+                    .setIsDeleted(false)
                     .setHashedPassword(passwordEncoder.encode("admin"))
                     .setProfilePictureUrl(
                             "https://images.unsplash.com/photo-1607746882042-944635dfe10e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=128&h=128&q=80")
                     .setRoles(Set.of(Role.USER, Role.ADMIN));
 
             userRepository.save(admin);
-
-            logger.info("... generating 100 Ticket entities...");
 
         };
     }

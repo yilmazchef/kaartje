@@ -78,7 +78,7 @@ public class TicketsView extends LitTemplate implements HasStyle, BeforeEnterObs
     @Id
     private TextField status;
     @Id
-    private Checkbox isActive;
+    private Checkbox isDeleted;
 
     @Id
     private Button cancel;
@@ -109,7 +109,7 @@ public class TicketsView extends LitTemplate implements HasStyle, BeforeEnterObs
         grid.addColumn(Ticket::getStatus).setHeader("Status").setAutoWidth(true);
         LitRenderer<Ticket> isActiveRenderer = LitRenderer.<Ticket>of(
                         "<vaadin-icon icon='vaadin:${item.icon}' style='width: var(--lumo-icon-size-s); height: var(--lumo-icon-size-s); color: ${item.color};'></vaadin-icon>")
-                .withProperty("icon", isDeleted -> isActive.getValue() ? "check" : "minus").withProperty("color",
+                .withProperty("icon", isDeleted -> this.isDeleted.getValue() ? "check" : "minus").withProperty("color",
                         isActive -> isActive.getIsDeleted()
                                 ? "var(--lumo-primary-text-color)"
                                 : "var(--lumo-disabled-text-color)");
