@@ -13,8 +13,6 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.UUID;
 
 // LOMBOK
@@ -68,17 +66,23 @@ public class Response {
     @Max(value = 10, message = "The value must be less than or equal to 10")
     Float score;
 
-    @ElementCollection
-    @CollectionTable(name = "tags")
-    Set<String> tags = new HashSet<>();
+    String tags;
 
     public Response addTag(@NotNull final String tag) {
-        this.getTags().add(tag);
+        if (this.tags == null) {
+            this.tags = tag;
+        } else {
+            this.tags += "," + tag;
+        }
         return this;
     }
 
     public Response removeTag(@NotNull final String tag) {
-        this.getTags().remove(tag);
+        if (this.tags == null) {
+            return this;
+        } else {
+            this.tags = this.tags.replace(tag, "");
+        }
         return this;
     }
 
@@ -89,31 +93,19 @@ public class Response {
     @PrePersist
     void onCreate() {
 
-        if (this.tags == null) {
-            this.tags = new HashSet<>();
-            this.getTags().add("default");
-        }
-
-        if (this.score == null) {
-            this.score = 0f;
-        }
-
-        if (this.priority == null) {
-            this.priority = 1;
-        }
-
-        if (this.isDeleted == null) {
-            this.isDeleted = false;
-        }
+        initializeDefaultValues();
 
     }
 
     @PreUpdate
     void onUpdate() {
 
+        initializeDefaultValues();
+    }
+
+    private void initializeDefaultValues() {
         if (this.tags == null) {
-            this.tags = new HashSet<>();
-            this.getTags().add("default");
+            this.addTag("undefined");
         }
 
         if (this.score == null) {

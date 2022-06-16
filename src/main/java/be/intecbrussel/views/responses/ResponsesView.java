@@ -68,8 +68,10 @@ public class ResponsesView extends LitTemplate implements HasStyle, BeforeEnterO
     private TextField priority;
     @Id
     private TextField score;
+
     @Id
     private TextField tags;
+
     @Id
     private Checkbox isDeleted;
 
@@ -88,17 +90,17 @@ public class ResponsesView extends LitTemplate implements HasStyle, BeforeEnterO
     public ResponsesView(ResponseService responseService) {
         this.responseService = responseService;
         addClassNames("responses-view");
-        grid.addColumn(ticket -> ticket.getTicket().getId()).setHeader("Ticket").setAutoWidth(true);
+        grid.addColumn(tic -> tic.getTicket().getId()).setHeader("Ticket").setAutoWidth(true);
         grid.addColumn(Response::getCreatedBy).setHeader("Created By").setAutoWidth(true);
         grid.addColumn(Response::getCreatedAt).setHeader("Created At").setAutoWidth(true);
         grid.addColumn(Response::getUpdatedAt).setHeader("Updated At").setAutoWidth(true);
         grid.addColumn(Response::getContent).setHeader("Content").setAutoWidth(true);
         grid.addColumn(Response::getPriority).setHeader("Priority").setAutoWidth(true);
         grid.addColumn(Response::getScore).setHeader("Score").setAutoWidth(true);
-        grid.addColumn(res -> {
+        grid.addColumn(r -> {
             final var sb = new StringBuilder();
-            for (final var tag : res.getTags()) {
-                sb.append(tag.toString());
+            for (final var t : r.getTags()) {
+                sb.append(t.toString());
                 sb.append(",");
             }
             return sb.toString();
@@ -106,8 +108,8 @@ public class ResponsesView extends LitTemplate implements HasStyle, BeforeEnterO
         LitRenderer<Response> isDeletedRenderer = LitRenderer.<Response>of(
                         "<vaadin-icon icon='vaadin:${item.icon}' style='width: var(--lumo-icon-size-s); height: var(--lumo-icon-size-s); color: ${item.color};'></vaadin-icon>")
                 .withProperty("icon",
-                        res -> res.getIsDeleted() ? "check" : "minus").withProperty("color",
-                        res -> res.getIsDeleted() ? "var(--lumo-primary-text-color)" : "var(--lumo-disabled-text-color)");
+                        r -> r.getIsDeleted() ? "check" : "minus").withProperty("color",
+                        r -> r.getIsDeleted() ? "var(--lumo-primary-text-color)" : "var(--lumo-disabled-text-color)");
 
         grid.addColumn(isDeletedRenderer).setHeader("Is Deleted").setAutoWidth(true);
 
