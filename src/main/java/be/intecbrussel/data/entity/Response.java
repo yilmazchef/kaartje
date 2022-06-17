@@ -68,22 +68,30 @@ public class Response {
 
     String tags;
 
-    public Response addTag(@NotNull final String tag) {
+    public void addTag(@NotNull final String tag) {
         if (this.tags == null) {
             this.tags = tag;
         } else {
             this.tags += "," + tag;
         }
-        return this;
     }
 
-    public Response removeTag(@NotNull final String tag) {
+    public void removeTag(@NotNull final String tag) {
         if (this.tags == null) {
-            return this;
-        } else {
-            this.tags = this.tags.replace(tag, "");
+            return;
         }
-        return this;
+        final String[] tags = this.tags.split(",");
+        final StringBuilder sb = new StringBuilder();
+        for (final String t : tags) {
+            if (!t.equals(tag)) {
+                sb.append(t).append(",");
+            }
+        }
+        this.tags = sb.toString();
+    }
+
+    public void removeAllTags() {
+        this.tags = null;
     }
 
     @ManyToOne

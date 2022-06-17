@@ -21,7 +21,6 @@ import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.spring.data.VaadinSpringDataHelpers;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 
 import javax.annotation.security.PermitAll;
@@ -55,9 +54,7 @@ public class DepartmentsView extends LitTemplate implements HasStyle, BeforeEnte
     @Id
     private TextField alias;
     @Id
-    private TextField contactEmail;
-    @Id
-    private TextField contactPhone;
+    private TextField manager;
 
     @Id
     private Button cancel;
@@ -70,17 +67,18 @@ public class DepartmentsView extends LitTemplate implements HasStyle, BeforeEnte
 
     private final DepartmentService departmentService;
 
-    @Autowired
     public DepartmentsView(DepartmentService departmentService) {
+
         this.departmentService = departmentService;
         addClassNames("departments-view");
+
         grid.addColumn(Department::getTitle).setHeader("Title").setAutoWidth(true);
         grid.addColumn(Department::getCreatedBy).setHeader("Created By").setAutoWidth(true);
         grid.addColumn(Department::getUpdatedBy).setHeader("Updated By").setAutoWidth(true);
         grid.addColumn(Department::getAlias).setHeader("Alias").setAutoWidth(true);
-        grid.addColumn(dept -> {
-            final var fname = dept.getManager() != null ? dept.getManager().getFirstName() : "";
-            final var lname = dept.getManager() != null ? dept.getManager().getLastName() : "";
+        grid.addColumn(d -> {
+            final var fname = d.getManager() != null ? d.getManager().getFirstName() : "";
+            final var lname = d.getManager() != null ? d.getManager().getLastName() : "";
             return fname + " " + lname;
         }).setHeader("Manager").setAutoWidth(true);
         grid.setItems(query -> departmentService.list(

@@ -5,7 +5,7 @@
       <env name="DB_HOST" value="localhost" />
       <env name="DB_NAME" value="kaartjedb" />
       <env name="DB_PASSWORD" value="postgres" />
-      <env name="DB_PORT" value="64797" />
+      <env name="DB_PORT" value="51806" />
       <env name="DB_USER" value="postgres" />
       <env name="PORT" value="8088" />
     </envs>
