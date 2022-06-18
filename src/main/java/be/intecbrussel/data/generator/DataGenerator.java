@@ -43,7 +43,9 @@ public class DataGenerator {
                     .setFirstName(faker.name().firstName())
                     .setLastName(faker.name().lastName())
                     .setUsername(faker.name().username())
+                    .setPhone(faker.phoneNumber().cellPhone())
                     .setHashedPassword(passwordEncoder.encode(userPwd))
+                    .setIsDeleted(false)
                     .setProfilePictureUrl(
                             "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=128&h=128&q=80")
                     .setRoles(Collections.singleton(Role.USER));
@@ -56,7 +58,9 @@ public class DataGenerator {
                     .setFirstName(faker.name().firstName())
                     .setLastName(faker.name().lastName())
                     .setUsername(faker.name().username())
+                    .setPhone(faker.phoneNumber().cellPhone())
                     .setHashedPassword(passwordEncoder.encode(adminPwd))
+                    .setIsDeleted(false)
                     .setProfilePictureUrl(
                             "https://images.unsplash.com/photo-1607746882042-944635dfe10e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=128&h=128&q=80")
                     .setRoles(Set.of(Role.USER, Role.ADMIN));
