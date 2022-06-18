@@ -30,7 +30,7 @@ import java.util.UUID;
 @Accessors(chain = true)
 // JPA & HIBERNATE
 @Entity
-@Table(name = "tickets")
+@Table(name = "admin")
 public class Ticket {
     @EqualsAndHashCode.Include
     @ToString.Include

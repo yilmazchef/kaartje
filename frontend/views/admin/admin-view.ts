@@ -10,8 +10,8 @@ import '@vaadin/vaadin-text-field';
 import {html, LitElement} from 'lit';
 import {customElement} from 'lit/decorators.js';
 
-@customElement('tickets-view')
-export class TicketsView extends LitElement {
+@customElement('admin-view')
+export class AdminView extends LitElement {
     createRenderRoot() {
         // Do not use a shadow root
         return this;

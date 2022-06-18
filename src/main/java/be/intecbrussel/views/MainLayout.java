@@ -2,11 +2,9 @@ package be.intecbrussel.views;
 
 import be.intecbrussel.data.entity.User;
 import be.intecbrussel.security.AuthenticatedUser;
-import be.intecbrussel.views.departments.DepartmentsView;
 import be.intecbrussel.views.home.HomeView;
 import be.intecbrussel.views.register.RegisterView;
-import be.intecbrussel.views.responses.ResponsesView;
-import be.intecbrussel.views.tickets.TicketsView;
+import be.intecbrussel.views.admin.AdminView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
@@ -127,13 +125,7 @@ public class MainLayout extends AppLayout {
     private MenuItemInfo[] createMenuItems() {
         return new MenuItemInfo[]{ //
                 new MenuItemInfo("Home", "la la-list", HomeView.class), //
-
-                new MenuItemInfo("Tickets", "la la-sticky-note", TicketsView.class), //
-
-                new MenuItemInfo("Responses", "la la-info-circle", ResponsesView.class), //
-
-                new MenuItemInfo("Departments", "la la-boxes", DepartmentsView.class), //
-
+                new MenuItemInfo("Admin", "la la-sticky-note", AdminView.class), //
                 new MenuItemInfo("Register", "la la-user", RegisterView.class), //
 
         };

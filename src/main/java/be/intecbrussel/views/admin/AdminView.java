@@ -1,4 +1,4 @@
-package be.intecbrussel.views.tickets;
+package be.intecbrussel.views.admin;
 
 import be.intecbrussel.data.entity.Ticket;
 import be.intecbrussel.data.service.TicketService;
@@ -41,15 +41,15 @@ import java.util.Optional;
 import java.util.UUID;
 
 @PageTitle("Tickets")
-@Route(value = "tickets/:ticketID?/:action?(edit)", layout = MainLayout.class)
+@Route(value = "admin/:ticketID?/:action?(edit)", layout = MainLayout.class)
 @PermitAll
-@Tag("tickets-view")
-@JsModule("./views/tickets/tickets-view.ts")
+@Tag("admin-view")
+@JsModule("./views/admin/admin-view.ts")
 @Uses(Icon.class)
-public class TicketsView extends LitTemplate implements HasStyle, BeforeEnterObserver {
+public class AdminView extends LitTemplate implements HasStyle, BeforeEnterObserver {
 
     private final String TICKET_ID = "ticketID";
-    private final String TICKET_EDIT_ROUTE_TEMPLATE = "tickets/%s/edit";
+    private final String TICKET_EDIT_ROUTE_TEMPLATE = "admin/%s/edit";
 
     // This is the Java companion file of a design
     // You can find the design file inside /frontend/views/
@@ -92,9 +92,9 @@ public class TicketsView extends LitTemplate implements HasStyle, BeforeEnterObs
     private final TicketService ticketService;
 
     @Autowired
-    public TicketsView(TicketService ticketService) {
+    public AdminView(TicketService ticketService) {
         this.ticketService = ticketService;
-        addClassNames("tickets-view");
+        addClassNames("admin-view");
         grid.addColumn(Ticket::getSubject).setHeader("Subject").setAutoWidth(true);
         LitRenderer<Ticket> attachmentRenderer = LitRenderer
                 .<Ticket>of("<img style='height: 64px' src=${item.attachment} />")
@@ -109,8 +109,8 @@ public class TicketsView extends LitTemplate implements HasStyle, BeforeEnterObs
         grid.addColumn(Ticket::getStatus).setHeader("Status").setAutoWidth(true);
         LitRenderer<Ticket> isActiveRenderer = LitRenderer.<Ticket>of(
                         "<vaadin-icon icon='vaadin:${item.icon}' style='width: var(--lumo-icon-size-s); height: var(--lumo-icon-size-s); color: ${item.color};'></vaadin-icon>")
-                .withProperty("icon", isDeleted -> this.isDeleted.getValue() ? "check" : "minus").withProperty("color",
-                        isActive -> isActive.getIsDeleted()
+                .withProperty("icon", t -> this.isDeleted.getValue().equals(Boolean.TRUE) ? "check" : "minus").withProperty("color",
+                        t -> t.getIsDeleted().equals(Boolean.TRUE)
                                 ? "var(--lumo-primary-text-color)"
                                 : "var(--lumo-disabled-text-color)");
 
@@ -128,7 +128,7 @@ public class TicketsView extends LitTemplate implements HasStyle, BeforeEnterObs
                 UI.getCurrent().navigate(String.format(TICKET_EDIT_ROUTE_TEMPLATE, event.getValue().getId()));
             } else {
                 clearForm();
-                UI.getCurrent().navigate(TicketsView.class);
+                UI.getCurrent().navigate(AdminView.class);
             }
         });
 
@@ -158,7 +158,7 @@ public class TicketsView extends LitTemplate implements HasStyle, BeforeEnterObs
                 clearForm();
                 refreshGrid();
                 Notification.show("Ticket details stored.");
-                UI.getCurrent().navigate(TicketsView.class);
+                UI.getCurrent().navigate(AdminView.class);
             } catch (ValidationException validationException) {
                 Notification.show("An exception happened while trying to store the ticket details.");
             }
@@ -178,7 +178,7 @@ public class TicketsView extends LitTemplate implements HasStyle, BeforeEnterObs
                 // when a row is selected but the data is no longer available,
                 // refresh grid
                 refreshGrid();
-                event.forwardTo(TicketsView.class);
+                event.forwardTo(AdminView.class);
             }
         }
     }
