@@ -3,12 +3,16 @@ package be.intecbrussel.data.entity;
 import lombok.*;
 import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import java.util.Set;
 import java.util.UUID;
 
 // LOMBOK
@@ -16,14 +20,14 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(onlyExplicitlyIncluded = true, callSuper = true)
+@ToString(onlyExplicitlyIncluded = true)
 // LOMBOK -> EXPERIMENTAL
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Accessors(chain = true)
 // JPA & HIBERNATE
 @Entity
 @Table(name = "responses")
-public class Response  {
+public class Response {
 
     @EqualsAndHashCode.Include
     @ToString.Include
@@ -43,10 +47,10 @@ public class Response  {
     @Email
     String createdBy;
 
-    @FutureOrPresent
+    @CreationTimestamp
     LocalDateTime createdAt;
 
-    @FutureOrPresent
+    @UpdateTimestamp
     LocalDateTime updatedAt;
 
     @Column(nullable = false)
@@ -62,22 +66,67 @@ public class Response  {
     @Max(value = 10, message = "The value must be less than or equal to 10")
     Float score;
 
-    @ElementCollection
-    @CollectionTable(name = "tags")
-    Set<String> tags = new java.util.LinkedHashSet<>();
+    String tags;
 
-    public Response addTag(@NotNull final String tag) {
-        this.getTags().add(tag);
-        return this;
+    public void addTag(@NotNull final String tag) {
+        if (this.tags == null) {
+            this.tags = tag;
+        } else {
+            this.tags += "," + tag;
+        }
     }
 
-    public Response removeTag(@NotNull final String tag) {
-        this.getTags().remove(tag);
-        return this;
+    public void removeTag(@NotNull final String tag) {
+        if (this.tags == null) {
+            return;
+        }
+        final String[] tags = this.tags.split(",");
+        final StringBuilder sb = new StringBuilder();
+        for (final String t : tags) {
+            if (!t.equals(tag)) {
+                sb.append(t).append(",");
+            }
+        }
+        this.tags = sb.toString();
+    }
+
+    public void removeAllTags() {
+        this.tags = null;
     }
 
     @ManyToOne
     @JoinColumn(name = "ticket_id")
     Ticket ticket;
+
+    @PrePersist
+    void onCreate() {
+
+        initializeDefaultValues();
+
+    }
+
+    @PreUpdate
+    void onUpdate() {
+
+        initializeDefaultValues();
+    }
+
+    private void initializeDefaultValues() {
+        if (this.tags == null) {
+            this.addTag("undefined");
+        }
+
+        if (this.score == null) {
+            this.score = 0f;
+        }
+
+        if (this.priority == null) {
+            this.priority = 1;
+        }
+
+        if (this.isDeleted == null) {
+            this.isDeleted = false;
+        }
+    }
 
 }

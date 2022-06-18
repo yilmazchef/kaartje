@@ -4,8 +4,12 @@ import lombok.*;
 import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.validator.constraints.URL;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.LastModifiedBy;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -20,15 +24,14 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(onlyExplicitlyIncluded = true, callSuper = true)
+@ToString(onlyExplicitlyIncluded = true)
 // LOMBOK -> EXPERIMENTAL
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Accessors(chain = true)
 // JPA & HIBERNATE
 @Entity
 @Table(name = "tickets")
-public class Ticket  {
-
+public class Ticket {
     @EqualsAndHashCode.Include
     @ToString.Include
     @Id
@@ -57,18 +60,21 @@ public class Ticket  {
     @ToString.Include
     @Email
     @NotNull
+    @CreatedBy
     String createdBy;
 
     @Email
     @NotNull
+    @LastModifiedBy
     String updatedBy;
 
     @EqualsAndHashCode.Include
     @ToString.Include
-    @FutureOrPresent
+    @CreationTimestamp
     LocalDateTime createdAt;
 
     @FutureOrPresent
+    @UpdateTimestamp
     LocalDateTime updatedAt;
 
     @ToString.Include

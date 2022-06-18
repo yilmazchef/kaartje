@@ -14,8 +14,9 @@ services:
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
     networks:
       - devnet
-    volumes:
-      - devvol:/var/lib/kaartje
+#    volumes:
+#      - appvol_base:/var/lib/kaartje
+#      - appvol_data:/var/lib/kaartje/data
 
   db:
     image: postgres:latest
@@ -32,8 +33,9 @@ services:
       retries: 5
     networks:
       - devnet
-    volumes:
-      - dbvol:/var/lib/postgresql/data
+#    volumes:
+#      - dbvol_base:/var/lib/postgresql
+#      - dbvol_data:/var/lib/postgresql/data
 
   dba:
     image: adminer:latest
@@ -48,7 +50,8 @@ networks:
   devnet:
     driver: bridge
 
-
 volumes:
-  dbvol: { }
-  devvol: { }
+  appvol_base: { }
+  appvol_data: { }
+  dbvol_base: { }
+  dbvol_data: { }

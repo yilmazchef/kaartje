@@ -3,15 +3,14 @@ package be.intecbrussel.data.entity;
 import lombok.*;
 import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
-import org.hibernate.validator.constraints.URL;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.LastModifiedBy;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Lob;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -23,12 +22,13 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(onlyExplicitlyIncluded = true, callSuper = true)
+@ToString(onlyExplicitlyIncluded = true)
 // LOMBOK -> EXPERIMENTAL
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Accessors(chain = true)
 // JPA & HIBERNATE
 @Entity
+@Table(name = "boards")
 public class Board {
 
     @ToString.Include
@@ -47,7 +47,6 @@ public class Board {
     String title;
 
     @Lob
-    @URL
     String attachment;
 
     @ToString.Include
@@ -57,20 +56,23 @@ public class Board {
     @ToString.Include
     @Email
     @NotNull
+    @CreatedBy
     String createdBy;
 
     @Email
     @NotNull
+    @LastModifiedBy
     String updatedBy;
 
     @ToString.Include
-    @FutureOrPresent
+    @CreationTimestamp
     LocalDateTime createdAt;
 
-    @FutureOrPresent
+    @UpdateTimestamp
     LocalDateTime updatedAt;
 
     @ToString.Include
     String status;
+
 
 }

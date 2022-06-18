@@ -9,8 +9,10 @@ import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -19,7 +21,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(onlyExplicitlyIncluded = true, callSuper = true)
+@ToString(onlyExplicitlyIncluded = true)
 // LOMBOK -> EXPERIMENTAL
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Accessors(chain = true)
@@ -40,6 +42,8 @@ public class User {
         this.isDeleted = true;
     }
 
+    @Email
+    @NotEmpty
     @ToString.Include
     String username;
 
@@ -58,10 +62,29 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     @ElementCollection(fetch = FetchType.EAGER)
-    Set<Role> roles;
+    Set<Role> roles = new HashSet<>();
 
     // @Lob
     @URL
     String profilePictureUrl;
+
+    @PrePersist
+    void prePersist() {
+        if (this.id == null) {
+            this.id = UUID.randomUUID();
+        }
+        if (this.roles == null) {
+            this.roles = new HashSet<>();
+            this.roles.add(Role.USER);
+        }
+    }
+
+    @PreUpdate
+    void preUpdate() {
+        if (this.roles == null) {
+            this.roles = new HashSet<>();
+            this.roles.add(Role.USER);
+        }
+    }
 
 }
