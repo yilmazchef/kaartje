@@ -222,7 +222,7 @@ public class DataGenerator {
                                     .setIsDeleted(false)
                                     .setCreatedAt(LocalDateTime.ofInstant(faker.date().past(4, TimeUnit.DAYS).toInstant(), ZoneId.systemDefault()))
                                     .setCreatedBy(student)
-                                    .setSharedOn(faker.internet().url())
+                                    .setSharedOn("https://" + faker.internet().url())
                                     .setViewsCount(faker.random().nextInt(0, 1_000_000))
                                     .setUpdatedAt(LocalDateTime.ofInstant(faker.date().past(2, TimeUnit.DAYS).toInstant(), ZoneId.systemDefault()))
                                     .setTicket(ticketContainer.newTicketRequest);
