@@ -6,6 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -30,10 +31,12 @@ public class UserService {
         return list(PageRequest.of(0, 25));
     }
 
+    @Transactional
     public User update(User entity) {
         return repository.save(entity);
     }
 
+    @Transactional
     public void delete(UUID id) {
         repository.deleteById(id);
     }

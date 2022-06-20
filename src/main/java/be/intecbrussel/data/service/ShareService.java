@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -21,10 +22,12 @@ public class ShareService {
         return repository.findById(id);
     }
 
+    @Transactional
     public Share update(Share entity) {
         return repository.save(entity);
     }
 
+    @Transactional
     public void delete(UUID id) {
         repository.deleteById(id);
     }

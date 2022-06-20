@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
 public class CategoryService {
 
@@ -21,10 +23,12 @@ public class CategoryService {
         return repository.findById(id);
     }
 
+    @Transactional
     public Category update(Category entity) {
         return repository.save(entity);
     }
 
+    @Transactional
     public void delete(UUID id) {
         repository.deleteById(id);
     }
