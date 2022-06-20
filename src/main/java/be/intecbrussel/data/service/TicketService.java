@@ -18,6 +18,7 @@ public class TicketService {
         this.repository = repository;
     }
 
+    @Transactional
     public Optional<Ticket> get(UUID id) {
         return repository.findById(id);
     }
@@ -32,10 +33,12 @@ public class TicketService {
         repository.deleteById(id);
     }
 
+    @Transactional
     public Page<Ticket> list(Pageable pageable) {
         return repository.findAll(pageable);
     }
 
+    @Transactional
     public int count() {
         return (int) repository.count();
     }

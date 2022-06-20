@@ -18,6 +18,7 @@ public class LikeService {
         this.repository = repository;
     }
 
+    @Transactional
     public Optional<Like> get(UUID id) {
         return repository.findById(id);
     }
@@ -32,14 +33,17 @@ public class LikeService {
         repository.deleteById(id);
     }
 
+    @Transactional
     public Page<Like> list(Pageable pageable) {
         return repository.findAll(pageable);
     }
 
+    @Transactional
     public Page<Like> list(UUID ticketId, Pageable pageable) {
         return repository.findAllByTicketId(ticketId, pageable);
     }
 
+    @Transactional
     public int count() {
         return (int) repository.count();
     }

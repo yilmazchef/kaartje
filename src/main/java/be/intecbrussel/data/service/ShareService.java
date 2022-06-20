@@ -18,6 +18,7 @@ public class ShareService {
         this.repository = repository;
     }
 
+    @Transactional
     public Optional<Share> get(UUID id) {
         return repository.findById(id);
     }
@@ -32,14 +33,17 @@ public class ShareService {
         repository.deleteById(id);
     }
 
+    @Transactional
     public Page<Share> list(Pageable pageable) {
         return repository.findAll(pageable);
     }
 
+    @Transactional
     public Page<Share> list(UUID ticketId, Pageable pageable) {
         return repository.findAllByTicketId(ticketId, pageable);
     }
 
+    @Transactional
     public int count() {
         return (int) repository.count();
     }

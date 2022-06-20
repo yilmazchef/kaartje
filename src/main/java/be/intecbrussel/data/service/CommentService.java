@@ -18,6 +18,7 @@ public class CommentService {
         this.repository = repository;
     }
 
+    @Transactional
     public Optional<Comment> get(UUID id) {
         return repository.findById(id);
     }
@@ -32,14 +33,17 @@ public class CommentService {
         repository.deleteById(id);
     }
 
+    @Transactional
     public Page<Comment> list(Pageable pageable) {
         return repository.findAll(pageable);
     }
 
+    @Transactional
     public Page<Comment> list(UUID ticketId, Pageable pageable) {
         return repository.findAllByTicket(ticketId, pageable);
     }
 
+    @Transactional
     public int count() {
         return (int) repository.count();
     }

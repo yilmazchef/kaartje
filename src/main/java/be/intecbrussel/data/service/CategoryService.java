@@ -19,6 +19,7 @@ public class CategoryService {
         this.repository = repository;
     }
 
+    @Transactional
     public Optional<Category> get(UUID id) {
         return repository.findById(id);
     }
@@ -33,10 +34,12 @@ public class CategoryService {
         repository.deleteById(id);
     }
 
+    @Transactional
     public Page<Category> list(Pageable pageable) {
         return repository.findAll(pageable);
     }
 
+    @Transactional
     public int count() {
         return (int) repository.count();
     }

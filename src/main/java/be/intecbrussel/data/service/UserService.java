@@ -19,14 +19,17 @@ public class UserService {
         this.repository = repository;
     }
 
+    @Transactional
     public Optional<User> get(UUID id) {
         return repository.findById(id);
     }
 
+    @Transactional
     public Optional<User> getByUsername(String username) {
         return repository.findByUsername(username);
     }
 
+    @Transactional
     public Page<User> list() {
         return list(PageRequest.of(0, 25));
     }
@@ -41,10 +44,12 @@ public class UserService {
         repository.deleteById(id);
     }
 
+    @Transactional
     public Page<User> list(Pageable pageable) {
         return repository.findAll(pageable);
     }
 
+    @Transactional
     public int count() {
         return (int) repository.count();
     }

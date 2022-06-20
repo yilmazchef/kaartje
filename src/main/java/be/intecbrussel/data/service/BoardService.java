@@ -18,6 +18,7 @@ public class BoardService {
         this.repository = repository;
     }
 
+    @Transactional
     public Optional<Board> get(UUID id) {
         return repository.findById(id);
     }
@@ -32,10 +33,12 @@ public class BoardService {
         repository.deleteById(id);
     }
 
+    @Transactional
     public Page<Board> list(Pageable pageable) {
         return repository.findAll(pageable);
     }
 
+    @Transactional
     public int count() {
         return (int) repository.count();
     }
