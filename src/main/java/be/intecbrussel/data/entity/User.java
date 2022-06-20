@@ -64,8 +64,7 @@ public class User {
     @ElementCollection(fetch = FetchType.EAGER)
     Set<Role> roles = new HashSet<>();
 
-    // @Lob
-    @URL
+    @URL(message = "Please provide a valid Profile Image URL")
     String profilePictureUrl;
 
     @PrePersist

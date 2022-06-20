@@ -8,10 +8,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.validator.constraints.URL;
-import org.springframework.data.annotation.CreatedBy;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
@@ -53,6 +51,7 @@ public class Ticket {
 
     @ToString.Include
     @NotNull
+    @Column(columnDefinition = "text")
     String content;
 
     @ManyToOne

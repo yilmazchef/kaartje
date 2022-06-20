@@ -50,7 +50,7 @@ public class Board {
 
     @ToString.Include
     @NotNull
-    @Lob
+    @Column(columnDefinition="text")
     String content;
 
     @ManyToOne

@@ -51,7 +51,7 @@ public class Comment {
     @UpdateTimestamp
     LocalDateTime updatedAt;
 
-    @Column(nullable = false)
+    @Column(columnDefinition = "text", nullable = false)
     @NotNull
     String content;
 
