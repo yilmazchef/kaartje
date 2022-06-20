@@ -27,7 +27,7 @@ import java.util.UUID;
 @Accessors(chain = true)
 // JPA & HIBERNATE
 @Entity
-@Table(name = "users")
+@Table(name = "users", schema = "public")
 public class User {
 
     @ToString.Include

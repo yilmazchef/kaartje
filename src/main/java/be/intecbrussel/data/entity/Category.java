@@ -20,7 +20,7 @@ import java.util.UUID;
 @Accessors(chain = true)
 // JPA & HIBERNATE
 @Entity
-@Table(name = "departments")
+@Table(name = "departments", schema = "public")
 public class Category {
 
     @ToString.Include

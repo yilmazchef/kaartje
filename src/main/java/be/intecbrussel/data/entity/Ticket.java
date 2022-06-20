@@ -27,7 +27,7 @@ import java.util.UUID;
 @Accessors(chain = true)
 // JPA & HIBERNATE
 @Entity
-@Table(name = "tickets")
+@Table(name = "tickets", schema = "public")
 public class Ticket {
     @EqualsAndHashCode.Include
     @ToString.Include
@@ -52,7 +52,7 @@ public class Ticket {
     @ToString.Include
     @NotNull
     @Lob
-    @Type( type = "org.hibernate.type.TextType")
+    @Type(type = "org.hibernate.type.TextType")
     String content;
 
     @ManyToOne

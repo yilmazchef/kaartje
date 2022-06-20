@@ -22,7 +22,7 @@ import java.util.UUID;
 @Accessors(chain = true)
 // JPA & HIBERNATE
 @Entity
-@Table(name = "likes")
+@Table(name = "likes", schema = "public")
 public class Like {
 
     @EqualsAndHashCode.Include

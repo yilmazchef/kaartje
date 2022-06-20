@@ -25,7 +25,7 @@ import java.util.UUID;
 @Accessors(chain = true)
 // JPA & HIBERNATE
 @Entity
-@Table(name = "comments")
+@Table(name = "comments", schema = "public")
 public class Comment {
 
     @EqualsAndHashCode.Include
@@ -53,7 +53,7 @@ public class Comment {
 
     @Column(nullable = false)
     @Lob
-    @Type( type = "org.hibernate.type.TextType")
+    @Type(type = "org.hibernate.type.TextType")
     @NotNull
     String content;
 
