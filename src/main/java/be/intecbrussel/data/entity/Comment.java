@@ -51,7 +51,9 @@ public class Comment {
     @UpdateTimestamp
     LocalDateTime updatedAt;
 
-    @Column(columnDefinition = "text", nullable = false)
+    @Column(nullable = false)
+    @Lob
+    @Type(type = "org.hibernate.type.StringClobType")
     @NotNull
     String content;
 

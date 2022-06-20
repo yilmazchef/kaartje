@@ -50,7 +50,7 @@ public class Board {
 
     @ToString.Include
     @NotNull
-    @Column(columnDefinition="text")
+    @Type(type="org.hibernate.type.StringClobType")
     String content;
 
     @ManyToOne
