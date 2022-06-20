@@ -1,27 +1,27 @@
 package be.intecbrussel.data.service;
 
-import be.intecbrussel.data.entity.Response;
-import java.util.Optional;
-import java.util.UUID;
-import org.springframework.beans.factory.annotation.Autowired;
+import be.intecbrussel.data.entity.Board;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+import java.util.UUID;
+
 @Service
-public class ResponseService {
+public class BoardService {
 
-    private final ResponseRepository repository;
+    private final BoardRepository repository;
 
-    public ResponseService(ResponseRepository repository) {
+    public BoardService(final BoardRepository repository) {
         this.repository = repository;
     }
 
-    public Optional<Response> get(UUID id) {
+    public Optional<Board> get(UUID id) {
         return repository.findById(id);
     }
 
-    public Response update(Response entity) {
+    public Board update(Board entity) {
         return repository.save(entity);
     }
 
@@ -29,7 +29,7 @@ public class ResponseService {
         repository.deleteById(id);
     }
 
-    public Page<Response> list(Pageable pageable) {
+    public Page<Board> list(Pageable pageable) {
         return repository.findAll(pageable);
     }
 

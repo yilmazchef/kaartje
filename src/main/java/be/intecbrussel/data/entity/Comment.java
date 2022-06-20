@@ -3,19 +3,15 @@ package be.intecbrussel.data.entity;
 import lombok.*;
 import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
-import org.hibernate.Hibernate;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.validator.constraints.URL;
-import org.springframework.data.annotation.CreatedBy;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import java.util.Objects;
 import java.util.UUID;
 
 // LOMBOK
@@ -29,8 +25,9 @@ import java.util.UUID;
 @Accessors(chain = true)
 // JPA & HIBERNATE
 @Entity
-@Table(name = "tickets")
-public class Ticket {
+@Table(name = "comments")
+public class Comment {
+
     @EqualsAndHashCode.Include
     @ToString.Include
     @Id
@@ -44,51 +41,30 @@ public class Ticket {
         this.isDeleted = true;
     }
 
-    @ToString.Include
-    String subject;
-
-    @Lob
-    @URL
-    String attachment;
-
-    @ToString.Include
-    @NotNull
-    String content;
-
     @ManyToOne
     @JoinColumn(name = "created_by")
     User createdBy;
 
-    @ManyToOne
-    @JoinColumn(name = "updated_by")
-    User updatedBy;
-
-    @ManyToOne
-    @JoinColumn(name = "assigned_to")
-    User assignedTo;
-
-    @EqualsAndHashCode.Include
-    @ToString.Include
     @CreationTimestamp
     LocalDateTime createdAt;
 
-    @FutureOrPresent
     @UpdateTimestamp
     LocalDateTime updatedAt;
 
-    @ToString.Include
-    String status;
+    @Column(nullable = false)
+    @NotNull
+    String content;
 
-    @ToString.Include
+    @Column(nullable = false)
+    @Min(value = 1, message = "The value must be greater than 0")
+    @Max(value = 5, message = "The value must be less than 5")
     Integer priority;
 
-    @ToString.Include
-    String type;
+    @Min(value = 0, message = "The value must be greater than or equal to 0")
+    @Max(value = 10, message = "The value must be less than or equal to 10")
+    Float score;
 
-    @ToString.Include
     String tags;
-
-    Integer likes;
 
     public void addTag(@NotNull final String tag) {
         if (this.tags == null) {
@@ -117,19 +93,38 @@ public class Ticket {
     }
 
     @ManyToOne
-    @JoinColumn(name = "board_id")
-    Board board;
+    @JoinColumn(name = "ticket_id")
+    Ticket ticket;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Ticket ticket = (Ticket) o;
-        return id != null && Objects.equals(id, ticket.id);
+    @PrePersist
+    void onCreate() {
+
+        initializeDefaultValues();
+
     }
 
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
+    @PreUpdate
+    void onUpdate() {
+
+        initializeDefaultValues();
     }
+
+    private void initializeDefaultValues() {
+        if (this.tags == null) {
+            this.setTags("undefined");
+        }
+
+        if (this.score == null) {
+            this.score = 0f;
+        }
+
+        if (this.priority == null) {
+            this.priority = 1;
+        }
+
+        if (this.isDeleted == null) {
+            this.isDeleted = false;
+        }
+    }
+
 }

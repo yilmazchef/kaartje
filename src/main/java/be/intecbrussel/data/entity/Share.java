@@ -6,12 +6,9 @@ import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -26,8 +23,8 @@ import java.util.UUID;
 @Accessors(chain = true)
 // JPA & HIBERNATE
 @Entity
-@Table(name = "responses")
-public class Response {
+@Table(name = "shares")
+public class Share {
 
     @EqualsAndHashCode.Include
     @ToString.Include
@@ -42,10 +39,9 @@ public class Response {
         this.isDeleted = true;
     }
 
-    @Column(nullable = false)
-    @NotNull
-    @Email
-    String createdBy;
+    @ManyToOne
+    @JoinColumn(name = "created_by")
+    User createdBy;
 
     @CreationTimestamp
     LocalDateTime createdAt;
@@ -53,46 +49,10 @@ public class Response {
     @UpdateTimestamp
     LocalDateTime updatedAt;
 
-    @Column(nullable = false)
-    @NotNull
-    String content;
+    @URL(message = "Invalid URL", regexp = "^(http|https)://.*$")
+    String sharedOn;
 
-    @Column(nullable = false)
-    @Min(value = 1, message = "The value must be greater than 0")
-    @Max(value = 5, message = "The value must be less than 5")
-    Integer priority;
-
-    @Min(value = 0, message = "The value must be greater than or equal to 0")
-    @Max(value = 10, message = "The value must be less than or equal to 10")
-    Float score;
-
-    String tags;
-
-    public void addTag(@NotNull final String tag) {
-        if (this.tags == null) {
-            this.tags = tag;
-        } else {
-            this.tags += "," + tag;
-        }
-    }
-
-    public void removeTag(@NotNull final String tag) {
-        if (this.tags == null) {
-            return;
-        }
-        final String[] tags = this.tags.split(",");
-        final StringBuilder sb = new StringBuilder();
-        for (final String t : tags) {
-            if (!t.equals(tag)) {
-                sb.append(t).append(",");
-            }
-        }
-        this.tags = sb.toString();
-    }
-
-    public void removeAllTags() {
-        this.tags = null;
-    }
+    Integer viewsCount;
 
     @ManyToOne
     @JoinColumn(name = "ticket_id")
@@ -113,7 +73,7 @@ public class Response {
 
     private void initializeDefaultValues() {
         if (this.tags == null) {
-            this.addTag("undefined");
+            this.setTags("undefined");
         }
 
         if (this.score == null) {

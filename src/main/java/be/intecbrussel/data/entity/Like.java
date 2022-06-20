@@ -6,16 +6,12 @@ import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 // LOMBOK
-
-
 @Getter
 @Setter
 @NoArgsConstructor
@@ -26,9 +22,10 @@ import java.util.UUID;
 @Accessors(chain = true)
 // JPA & HIBERNATE
 @Entity
-@Table(name = "boards")
-public class Board {
+@Table(name = "likes")
+public class Like {
 
+    @EqualsAndHashCode.Include
     @ToString.Include
     @Id
     @GeneratedValue
@@ -41,42 +38,38 @@ public class Board {
         this.isDeleted = true;
     }
 
-    @ToString.Include
-    String title;
-
-    @Lob
-    @URL
-    String attachment;
-
-    @ToString.Include
-    @NotNull
-    @Lob
-    String content;
-
     @ManyToOne
     @JoinColumn(name = "created_by")
     User createdBy;
 
-    @ManyToOne
-    @JoinColumn(name = "updated_by")
-    User updatedBy;
-
-    @ToString.Include
     @CreationTimestamp
     LocalDateTime createdAt;
 
     @UpdateTimestamp
     LocalDateTime updatedAt;
 
-    @ToString.Include
-    String status;
+    @ManyToOne
+    @JoinColumn(name = "ticket_id")
+    Ticket ticket;
 
-    String color;
+    @PrePersist
+    void onCreate() {
 
-    @ToString.Include
-    String description;
+        initializeDefaultValues();
 
-    @URL
-    String background;
+    }
+
+    @PreUpdate
+    void onUpdate() {
+
+        initializeDefaultValues();
+    }
+
+    private void initializeDefaultValues() {
+
+        if (this.isDeleted == null) {
+            this.isDeleted = false;
+        }
+    }
 
 }

@@ -4,14 +4,9 @@ import lombok.*;
 import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.Type;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.LastModifiedBy;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.UUID;
 
 // LOMBOK
@@ -26,7 +21,7 @@ import java.util.UUID;
 // JPA & HIBERNATE
 @Entity
 @Table(name = "departments")
-public class Department {
+public class Category {
 
     @ToString.Include
     @Id
@@ -43,29 +38,40 @@ public class Department {
     @NotNull
     String title;
 
-    @Email
-    @NotNull
-    @CreatedBy
-    String createdBy;
+    @ManyToOne
+    @JoinColumn(name = "created_by")
+    User createdBy;
 
-    @Email
-    @NotNull
-    @LastModifiedBy
-    String updatedBy;
+    @ManyToOne
+    @JoinColumn(name = "updated_by")
+    User updatedBy;
 
-    @ElementCollection
-    Set<String> alias = new HashSet<>();
+    String alias;
 
-    public void addAlias(String alias) {
-        this.alias.add(alias);
+    public void addTag(@NotNull final String tag) {
+        if (this.alias == null) {
+            this.alias = tag;
+        } else {
+            this.alias += "," + tag;
+        }
     }
 
-    public void removeAlias(String alias) {
-        this.alias.remove(alias);
+    public void removeTag(@NotNull final String tag) {
+        if (this.alias == null) {
+            return;
+        }
+        final String[] alias = this.alias.split(",");
+        final StringBuilder sb = new StringBuilder();
+        for (final String t : alias) {
+            if (!t.equals(tag)) {
+                sb.append(t).append(",");
+            }
+        }
+        this.alias = sb.toString();
     }
 
-    public void removeAllAliases() {
-        this.alias.clear();
+    public void removeAllTags() {
+        this.setAlias("undefined");
     }
 
     public boolean hasAlias(String alias) {
@@ -75,9 +81,5 @@ public class Department {
     public boolean hasAliases() {
         return !this.alias.isEmpty();
     }
-
-
-    @OneToOne
-    User manager;
 
 }
