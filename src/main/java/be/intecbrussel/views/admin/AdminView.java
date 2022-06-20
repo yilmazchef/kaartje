@@ -101,7 +101,7 @@ public class AdminView extends LitTemplate implements HasStyle, BeforeEnterObser
                 .withProperty("attachment", Ticket::getAttachment);
         grid.addColumn(attachmentRenderer).setHeader("Attachment").setWidth("68px").setFlexGrow(0);
 
-        grid.addColumn(Ticket::getContent).setHeader("Content").setAutoWidth(true);
+        grid.addColumn(Ticket::getMessage).setHeader("Content").setAutoWidth(true);
         grid.addColumn(Ticket::getCreatedBy).setHeader("Created By").setAutoWidth(true);
         grid.addColumn(Ticket::getUpdatedBy).setHeader("Updated By").setAutoWidth(true);
         grid.addColumn(Ticket::getCreatedAt).setHeader("Created At").setAutoWidth(true);

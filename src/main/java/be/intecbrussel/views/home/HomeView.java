@@ -13,7 +13,6 @@ import org.springframework.data.domain.PageRequest;
 
 import javax.annotation.security.PermitAll;
 import java.util.Arrays;
-import java.util.List;
 
 @PageTitle("Home")
 @Route(value = "home", layout = MainLayout.class)
@@ -57,7 +56,7 @@ public class HomeView extends Div implements AfterNavigationObserver {
                     user.getProfilePictureUrl(),
                     user.getUsername(),
                     ticket.getCreatedAt().toString(),
-                    ticket.getContent(),
+                    ticket.getMessage(),
                     String.valueOf(ticket.getLikes()),
                     comments.getTotalElements() + "",
                     String.valueOf(shares.getTotalElements())
@@ -65,7 +64,7 @@ public class HomeView extends Div implements AfterNavigationObserver {
                     "https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200",
                     ticket.getStatus(),
                     ticket.getCreatedAt().toString(),
-                    ticket.getContent(),
+                    ticket.getMessage(),
                     String.valueOf(ticket.getLikes()),
                     comments.getTotalElements() + "",
                     String.valueOf(shares.getTotalElements())

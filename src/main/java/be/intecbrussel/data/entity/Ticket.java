@@ -53,7 +53,7 @@ public class Ticket {
     @NotNull
     @Lob
     @Type(type = "org.hibernate.type.TextType")
-    String content;
+    String message;
 
     @ManyToOne
     @JoinColumn(name = "created_by")

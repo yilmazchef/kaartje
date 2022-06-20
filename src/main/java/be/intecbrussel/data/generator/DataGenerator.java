@@ -156,7 +156,7 @@ public class DataGenerator {
                         final var ticketContainer = new Object() {
                             final Ticket newTicketRequest = new Ticket()
                                     .setSubject(faker.lorem().sentence())
-                                    .setContent(faker.lorem().paragraph())
+                                    .setMessage(faker.lorem().paragraph())
                                     .setTags(String.join(",", faker.lorem().words(5)))
                                     .setIsDeleted(false)
                                     .setCreatedBy(student)
@@ -181,7 +181,7 @@ public class DataGenerator {
 
                         final var commentContainer = new Object() {
                             final Comment newCommentRequest = new Comment()
-                                    .setContent(faker.lorem().paragraph())
+                                    .setMessage(faker.lorem().paragraph())
                                     .setIsDeleted(false)
                                     .setCreatedAt(LocalDateTime.ofInstant(faker.date().past(5, TimeUnit.DAYS).toInstant(), ZoneId.systemDefault()))
                                     .setCreatedBy(student)
@@ -195,7 +195,7 @@ public class DataGenerator {
 
                         log.info(
                                 MessageFormat.format("Saved comment {0} with id {1}",
-                                        commentContainer.newCommentRequest.getContent(),
+                                        commentContainer.newCommentRequest.getMessage(),
                                         commentContainer.newCommentRequest.getId())
                         );
 

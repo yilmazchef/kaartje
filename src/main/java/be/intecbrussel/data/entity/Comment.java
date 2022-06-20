@@ -55,7 +55,7 @@ public class Comment {
     @Lob
     @Type(type = "org.hibernate.type.TextType")
     @NotNull
-    String content;
+    String message;
 
     @Column(nullable = false)
     @Min(value = 1, message = "The value must be greater than 0")
