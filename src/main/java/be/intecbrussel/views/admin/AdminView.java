@@ -137,6 +137,11 @@ public class AdminView extends LitTemplate implements HasStyle, BeforeEnterObser
 
         // Bind fields. This is where you'd define e.g. validation rules
 
+        // TODO: fix the following issues.
+        //  2022-06-20 23:43:47.238  INFO 22728 --- [nio-8888-exec-5] com.vaadin.flow.data.binder.Binder       : firstName does not have an accessible setter
+        //  2022-06-20 23:43:47.238  INFO 22728 --- [nio-8888-exec-5] com.vaadin.flow.data.binder.Binder       : lastName does not have an accessible setter
+        //  2022-06-20 23:43:47.238  INFO 22728 --- [nio-8888-exec-5] com.vaadin.flow.data.binder.Binder       : phone does not have an accessible setter
+
         binder.bindInstanceFields(this);
 
         attachImageUpload(attachment, attachmentPreview);
