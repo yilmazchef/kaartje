@@ -13,6 +13,7 @@ import com.vaadin.flow.router.*;
 import org.springframework.data.domain.PageRequest;
 
 import javax.annotation.security.PermitAll;
+import java.time.format.DateTimeFormatter;
 
 @PageTitle("Home")
 @Route(value = "home", layout = MainLayout.class)
@@ -59,7 +60,7 @@ public class HomeView extends Div implements AfterNavigationObserver {
                     return oUser.map(user -> new TicketBinder(
                             user.getProfilePictureUrl(),
                             user.getUsername(),
-                            ticket.getCreatedAt().toString(),
+                            ticket.getCreatedAt().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")).toString(),
                             ticket.getMessage(),
                             String.valueOf(ticket.getLikes()),
                             comments.getTotalElements() + "",
