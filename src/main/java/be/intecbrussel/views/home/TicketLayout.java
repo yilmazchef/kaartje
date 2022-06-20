@@ -47,7 +47,6 @@ public class TicketLayout extends HorizontalLayout {
         actions.getThemeList().add("spacing-s");
 
         final var likeIcon = VaadinIcon.HEART.create();
-        likeIcon.addClassName("icon");
         final var likeButton = new Button(likeIcon, onClick -> {
             Notification.show(
                     "You liked " + ticketBinder.getName(),
@@ -55,12 +54,12 @@ public class TicketLayout extends HorizontalLayout {
                     Notification.Position.MIDDLE
             );
         });
+        likeButton.addClassName("icon");
 
         final var likes = new Span(ticketBinder.getLikes());
         likes.addClassName("likes");
 
         final var commentIcon = VaadinIcon.COMMENT.create();
-        commentIcon.addClassName("icon");
         final var commentButton = new Button(commentIcon, onClick -> {
             Notification.show(
                     "You commented " + ticketBinder.getName(),
@@ -68,12 +67,12 @@ public class TicketLayout extends HorizontalLayout {
                     Notification.Position.MIDDLE
             );
         });
+        commentButton.addClassName("icon");
 
         final var comments = new Span(ticketBinder.getComments());
         comments.addClassName("comments");
 
         final var shareIcon = VaadinIcon.CONNECT.create();
-        shareIcon.addClassName("icon");
         final var shareButton = new Button(shareIcon, onClick -> {
             Notification.show(
                     "You shared " + ticketBinder.getName(),
@@ -81,6 +80,7 @@ public class TicketLayout extends HorizontalLayout {
                     Notification.Position.MIDDLE
             );
         });
+        shareButton.addClassName("icon");
 
         final var shares = new Span(ticketBinder.getShares());
         shares.addClassName("shares");
