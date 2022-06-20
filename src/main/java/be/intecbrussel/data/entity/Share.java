@@ -72,17 +72,6 @@ public class Share {
     }
 
     private void initializeDefaultValues() {
-        if (this.tags == null) {
-            this.setTags("undefined");
-        }
-
-        if (this.score == null) {
-            this.score = 0f;
-        }
-
-        if (this.priority == null) {
-            this.priority = 1;
-        }
 
         if (this.isDeleted == null) {
             this.isDeleted = false;
