@@ -27,7 +27,6 @@ import java.util.UUID;
 public class Share {
 
     @EqualsAndHashCode.Include
-    @ToString.Include
     @Id
     @GeneratedValue
     @Type(type = "uuid-char")

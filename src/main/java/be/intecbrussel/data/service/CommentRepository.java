@@ -5,12 +5,19 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 import java.util.UUID;
 
 public interface CommentRepository extends JpaRepository<Comment, UUID>, JpaSpecificationExecutor<Comment> {
 
-    Page<Comment> findAllByTicketId(@NotNull UUID ticketId, Pageable pageable);
+    @Query("select c from Comment c where c.ticket.id = :ticketId")
+    Page<Comment> findAllByTicket(@Param("ticketId") @NotNull UUID ticketId, Pageable pageable);
+
+    @Query("select c from Comment c where c.ticket.id = :ticket_id")
+    List<Comment> findAllByTicket(@Param("ticket_id") @NotNull UUID ticket_id);
 
 }

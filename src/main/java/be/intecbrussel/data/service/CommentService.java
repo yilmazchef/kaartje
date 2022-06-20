@@ -37,7 +37,7 @@ public class CommentService {
     }
 
     public Page<Comment> list(UUID ticketId, Pageable pageable) {
-        return repository.findAllByTicketId(ticketId, pageable);
+        return repository.findAllByTicket(ticketId, pageable);
     }
 
     public int count() {

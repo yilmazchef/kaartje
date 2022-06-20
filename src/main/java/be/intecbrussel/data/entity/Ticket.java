@@ -30,7 +30,6 @@ import java.util.UUID;
 @Table(name = "tickets", schema = "public")
 public class Ticket {
     @EqualsAndHashCode.Include
-    @ToString.Include
     @Id
     @GeneratedValue
     @Type(type = "uuid-char")

@@ -29,7 +29,6 @@ import java.util.UUID;
 public class Comment {
 
     @EqualsAndHashCode.Include
-    @ToString.Include
     @Id
     @GeneratedValue
     @Type(type = "uuid-char")

@@ -23,7 +23,7 @@ import java.util.UUID;
 @Table(name = "departments", schema = "public")
 public class Category {
 
-    @ToString.Include
+    @EqualsAndHashCode.Include
     @Id
     @GeneratedValue
     @Type(type = "uuid-char")

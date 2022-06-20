@@ -29,7 +29,7 @@ import java.util.UUID;
 @Table(name = "boards", schema = "public")
 public class Board {
 
-    @ToString.Include
+    @EqualsAndHashCode.Include
     @Id
     @GeneratedValue
     @Type(type = "uuid-char")
@@ -71,7 +71,6 @@ public class Board {
 
     String color;
 
-    @ToString.Include
     @Lob
     @Type(type = "org.hibernate.type.TextType")
     @NotNull

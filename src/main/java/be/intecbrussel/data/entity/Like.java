@@ -26,7 +26,6 @@ import java.util.UUID;
 public class Like {
 
     @EqualsAndHashCode.Include
-    @ToString.Include
     @Id
     @GeneratedValue
     @Type(type = "uuid-char")
