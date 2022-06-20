@@ -4,6 +4,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 
@@ -48,21 +49,43 @@ public class TicketLayout extends HorizontalLayout {
         final var likeIcon = VaadinIcon.HEART.create();
         likeIcon.addClassName("icon");
         final var likeButton = new Button(likeIcon, onClick -> {
-
+            Notification.show(
+                    "You liked " + ticketBinder.getName(),
+                    3000,
+                    Notification.Position.MIDDLE
+            );
         });
 
         final var likes = new Span(ticketBinder.getLikes());
         likes.addClassName("likes");
+
         final var commentIcon = VaadinIcon.COMMENT.create();
         commentIcon.addClassName("icon");
+        final var commentButton = new Button(commentIcon, onClick -> {
+            Notification.show(
+                    "You commented " + ticketBinder.getName(),
+                    3000,
+                    Notification.Position.MIDDLE
+            );
+        });
+
         final var comments = new Span(ticketBinder.getComments());
         comments.addClassName("comments");
+
         final var shareIcon = VaadinIcon.CONNECT.create();
         shareIcon.addClassName("icon");
+        final var shareButton = new Button(shareIcon, onClick -> {
+            Notification.show(
+                    "You shared " + ticketBinder.getName(),
+                    3000,
+                    Notification.Position.MIDDLE
+            );
+        });
+
         final var shares = new Span(ticketBinder.getShares());
         shares.addClassName("shares");
 
-        actions.add(likeIcon, likes, commentIcon, comments, shareIcon, shares);
+        actions.add(likeButton, likes, commentButton, comments, shareButton, shares);
 
         description.add(header, post, actions);
         add(image, description);
