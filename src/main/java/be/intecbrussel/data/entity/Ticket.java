@@ -52,7 +52,7 @@ public class Ticket {
     @ToString.Include
     @NotNull
     @Lob
-    @Type(type = "org.hibernate.type.StringClobType")
+    @Type( type = "org.hibernate.type.TextType")
     String content;
 
     @ManyToOne

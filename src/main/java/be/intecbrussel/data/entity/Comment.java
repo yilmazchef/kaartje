@@ -53,7 +53,7 @@ public class Comment {
 
     @Column(nullable = false)
     @Lob
-    @Type(type = "org.hibernate.type.StringClobType")
+    @Type( type = "org.hibernate.type.TextType")
     @NotNull
     String content;
 
