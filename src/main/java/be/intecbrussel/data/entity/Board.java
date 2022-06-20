@@ -49,9 +49,7 @@ public class Board {
     String attachment;
 
     @ToString.Include
-    @NotNull
-    @Type( type = "org.hibernate.type.TextType")
-    String content;
+    String slogan;
 
     @ManyToOne
     @JoinColumn(name = "created_by")
@@ -74,6 +72,9 @@ public class Board {
     String color;
 
     @ToString.Include
+    @Lob
+    @Type(type = "org.hibernate.type.TextType")
+    @NotNull
     String description;
 
     @URL

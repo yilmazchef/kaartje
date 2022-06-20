@@ -142,7 +142,7 @@ public class DataGenerator {
                                     .setBackground(faker.internet().image())
                                     .setStatus("DRAFT")
                                     .setColor(faker.color().hex())
-                                    .setContent(faker.lorem().paragraph());
+                                    .setSlogan(faker.lorem().paragraph());
                         };
 
                         boardRepository.save(boardContainer.newBoardRequest);
