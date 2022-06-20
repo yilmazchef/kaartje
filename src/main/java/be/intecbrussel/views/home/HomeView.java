@@ -8,11 +8,11 @@ import be.intecbrussel.views.MainLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.GridVariant;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.data.provider.DataProvider;
 import com.vaadin.flow.router.*;
 import org.springframework.data.domain.PageRequest;
 
 import javax.annotation.security.PermitAll;
-import java.util.Arrays;
 
 @PageTitle("Home")
 @Route(value = "home", layout = MainLayout.class)
@@ -46,33 +46,38 @@ public class HomeView extends Div implements AfterNavigationObserver {
     @Override
     public void afterNavigation(AfterNavigationEvent event) {
 
-        final var tickets = ticketService.list(PageRequest.of(0, 25));
-        final var ticketBinders = Arrays.asList(tickets.getContent().stream().map(ticket -> {
-            final var oUser = userService.getByUsername(ticket.getCreatedBy().getUsername());
-            final var comments = commentService.list(ticket.getId(), PageRequest.of(0, 25));
-            final var shares = shareService.list(ticket.getId(), PageRequest.of(0, 25));
+        final var ticketBinders = ticketService
+                .list(PageRequest.of(0, 25))
+                .getContent()
+                .stream()
+                .map(ticket -> {
 
-            return oUser.map(user -> new TicketBinder(
-                    user.getProfilePictureUrl(),
-                    user.getUsername(),
-                    ticket.getCreatedAt().toString(),
-                    ticket.getMessage(),
-                    String.valueOf(ticket.getLikes()),
-                    comments.getTotalElements() + "",
-                    String.valueOf(shares.getTotalElements())
-            )).orElseGet(() -> new TicketBinder(
-                    "https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200",
-                    ticket.getStatus(),
-                    ticket.getCreatedAt().toString(),
-                    ticket.getMessage(),
-                    String.valueOf(ticket.getLikes()),
-                    comments.getTotalElements() + "",
-                    String.valueOf(shares.getTotalElements())
-            ));
+                    final var oUser = userService.getByUsername(ticket.getCreatedBy().getUsername());
+                    final var comments = commentService.list(ticket.getId(), PageRequest.of(0, 25));
+                    final var shares = shareService.list(ticket.getId(), PageRequest.of(0, 25));
 
-        }).toArray(TicketBinder[]::new));
+                    return oUser.map(user -> new TicketBinder(
+                            user.getProfilePictureUrl(),
+                            user.getUsername(),
+                            ticket.getCreatedAt().toString(),
+                            ticket.getMessage(),
+                            String.valueOf(ticket.getLikes()),
+                            comments.getTotalElements() + "",
+                            String.valueOf(shares.getTotalElements())
+                    )).orElseGet(() -> new TicketBinder(
+                            "https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200",
+                            ticket.getStatus(),
+                            ticket.getCreatedAt().toString(),
+                            ticket.getMessage(),
+                            String.valueOf(ticket.getLikes()),
+                            comments.getTotalElements() + "",
+                            String.valueOf(shares.getTotalElements())
+                    ));
 
-        grid.setItems(ticketBinders);
+                });
+
+        grid.setItems(DataProvider.fromStream(ticketBinders));
+
     }
 
 }
