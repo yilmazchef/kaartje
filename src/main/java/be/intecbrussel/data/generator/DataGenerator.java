@@ -161,7 +161,7 @@ public class DataGenerator {
                                     .setIsDeleted(false)
                                     .setCreatedBy(student)
                                     .setCreatedAt(LocalDateTime.ofInstant(faker.date().past(7, TimeUnit.DAYS).toInstant(), ZoneId.systemDefault()))
-                                    .setAttachment(faker.internet().url())
+                                    .setAttachment("https://" + faker.internet().url())
                                     .setStatus("TODO")
                                     .setAssignedTo(adminContainer.newAdminRequest)
                                     .setBoard(boardContainer.newBoardRequest)
