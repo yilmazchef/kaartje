@@ -40,12 +40,12 @@ import java.util.Base64;
 import java.util.Optional;
 import java.util.UUID;
 
-@PageTitle("Tickets")
-@Route(value = "admin/:ticketID?/:action?(edit)", layout = MainLayout.class)
+@PageTitle ( "Tickets" )
+@Route ( value = "admin/:ticketID?/:action?(edit)", layout = MainLayout.class )
 @PermitAll
-@Tag("admin-view")
-@JsModule("./views/admin/admin-view.ts")
-@Uses(Icon.class)
+@Tag ( "admin-view" )
+@JsModule ( "./views/admin/admin-view.ts" )
+@Uses ( Icon.class )
 public class AdminView extends LitTemplate implements HasStyle, BeforeEnterObserver {
 
     private final String TICKET_ID = "ticketID";
@@ -57,7 +57,7 @@ public class AdminView extends LitTemplate implements HasStyle, BeforeEnterObser
     // (vaadin.com/designer)
 
     @Id
-    private Grid<Ticket> grid;
+    private Grid < Ticket > grid;
 
     @Id
     private TextField subject;
@@ -85,55 +85,55 @@ public class AdminView extends LitTemplate implements HasStyle, BeforeEnterObser
     @Id
     private Button save;
 
-    private BeanValidationBinder<Ticket> binder;
+    private BeanValidationBinder < Ticket > binder;
 
     private Ticket ticket;
 
     private final TicketService ticketService;
 
     @Autowired
-    public AdminView(TicketService ticketService) {
+    public AdminView ( TicketService ticketService ) {
         this.ticketService = ticketService;
-        addClassNames("admin-view");
-        grid.addColumn(Ticket::getSubject).setHeader("Subject").setAutoWidth(true);
-        LitRenderer<Ticket> attachmentRenderer = LitRenderer
-                .<Ticket>of("<img style='height: 64px' src=${item.attachment} />")
-                .withProperty("attachment", Ticket::getAttachment);
-        grid.addColumn(attachmentRenderer).setHeader("Attachment").setWidth("68px").setFlexGrow(0);
+        addClassNames ( "admin-view" );
+        grid.addColumn ( Ticket :: getSubject ).setHeader ( "Subject" ).setAutoWidth ( true );
+        LitRenderer < Ticket > attachmentRenderer = LitRenderer
+                . < Ticket > of ( "<img style='height: 64px' src=${item.attachment} />" )
+                .withProperty ( "attachment", Ticket :: getAttachment );
+        grid.addColumn ( attachmentRenderer ).setHeader ( "Attachment" ).setWidth ( "68px" ).setFlexGrow ( 0 );
 
-        grid.addColumn(Ticket::getMessage).setHeader("Content").setAutoWidth(true);
-        grid.addColumn(Ticket::getCreatedBy).setHeader("Created By").setAutoWidth(true);
-        grid.addColumn(Ticket::getUpdatedBy).setHeader("Updated By").setAutoWidth(true);
-        grid.addColumn(Ticket::getCreatedAt).setHeader("Created At").setAutoWidth(true);
-        grid.addColumn(Ticket::getUpdatedAt).setHeader("Updated At").setAutoWidth(true);
-        grid.addColumn(Ticket::getStatus).setHeader("Status").setAutoWidth(true);
-        LitRenderer<Ticket> isActiveRenderer = LitRenderer.<Ticket>of(
-                        "<vaadin-icon icon='vaadin:${item.icon}' style='width: var(--lumo-icon-size-s); height: var(--lumo-icon-size-s); color: ${item.color};'></vaadin-icon>")
-                .withProperty("icon", t -> this.isDeleted.getValue().equals(Boolean.TRUE) ? "check" : "minus").withProperty("color",
-                        t -> t.getIsDeleted().equals(Boolean.TRUE)
+        grid.addColumn ( Ticket :: getMessage ).setHeader ( "Content" ).setAutoWidth ( true );
+        grid.addColumn ( Ticket :: getCreatedBy ).setHeader ( "Created By" ).setAutoWidth ( true );
+        grid.addColumn ( Ticket :: getUpdatedBy ).setHeader ( "Updated By" ).setAutoWidth ( true );
+        grid.addColumn ( Ticket :: getCreatedAt ).setHeader ( "Created At" ).setAutoWidth ( true );
+        grid.addColumn ( Ticket :: getUpdatedAt ).setHeader ( "Updated At" ).setAutoWidth ( true );
+        grid.addColumn ( Ticket :: getStatus ).setHeader ( "Status" ).setAutoWidth ( true );
+        LitRenderer < Ticket > isActiveRenderer = LitRenderer. < Ticket > of (
+                        "<vaadin-icon icon='vaadin:${item.icon}' style='width: var(--lumo-icon-size-s); height: var(--lumo-icon-size-s); color: ${item.color};'></vaadin-icon>" )
+                .withProperty ( "icon", t -> this.isDeleted.getValue ( ).equals ( Boolean.TRUE ) ? "check" : "minus" ).withProperty ( "color",
+                        t -> t.getIsDeleted ( ).equals ( Boolean.TRUE )
                                 ? "var(--lumo-primary-text-color)"
-                                : "var(--lumo-disabled-text-color)");
+                                : "var(--lumo-disabled-text-color)" );
 
-        grid.addColumn(isActiveRenderer).setHeader("Is Active").setAutoWidth(true);
+        grid.addColumn ( isActiveRenderer ).setHeader ( "Is Active" ).setAutoWidth ( true );
 
-        grid.setItems(query -> ticketService.list(
-                        PageRequest.of(query.getPage(), query.getPageSize(), VaadinSpringDataHelpers.toSpringDataSort(query)))
-                .stream());
-        grid.addThemeVariants(GridVariant.LUMO_NO_BORDER);
-        grid.setHeightFull();
+        grid.setItems ( query -> ticketService.list (
+                        PageRequest.of ( query.getPage ( ), query.getPageSize ( ), VaadinSpringDataHelpers.toSpringDataSort ( query ) ) )
+                .stream ( ) );
+        grid.addThemeVariants ( GridVariant.LUMO_NO_BORDER );
+        grid.setHeightFull ( );
 
         // when a row is selected or deselected, populate form
-        grid.asSingleSelect().addValueChangeListener(event -> {
-            if (event.getValue() != null) {
-                UI.getCurrent().navigate(String.format(TICKET_EDIT_ROUTE_TEMPLATE, event.getValue().getId()));
+        grid.asSingleSelect ( ).addValueChangeListener ( event -> {
+            if ( event.getValue ( ) != null ) {
+                UI.getCurrent ( ).navigate ( String.format ( TICKET_EDIT_ROUTE_TEMPLATE, event.getValue ( ).getId ( ) ) );
             } else {
-                clearForm();
-                UI.getCurrent().navigate(AdminView.class);
+                clearForm ( );
+                UI.getCurrent ( ).navigate ( AdminView.class );
             }
-        });
+        } );
 
         // Configure Form
-        binder = new BeanValidationBinder<>(Ticket.class);
+        binder = new BeanValidationBinder <> ( Ticket.class );
 
         // Bind fields. This is where you'd define e.g. validation rules
 
@@ -142,87 +142,87 @@ public class AdminView extends LitTemplate implements HasStyle, BeforeEnterObser
         //  2022-06-20 23:43:47.238  INFO 22728 --- [nio-8888-exec-5] com.vaadin.flow.data.binder.Binder       : lastName does not have an accessible setter
         //  2022-06-20 23:43:47.238  INFO 22728 --- [nio-8888-exec-5] com.vaadin.flow.data.binder.Binder       : phone does not have an accessible setter
 
-        binder.bindInstanceFields(this);
+        binder.bindInstanceFields ( this );
 
-        attachImageUpload(attachment, attachmentPreview);
+        attachImageUpload ( attachment, attachmentPreview );
 
-        cancel.addClickListener(e -> {
-            clearForm();
-            refreshGrid();
-        });
+        cancel.addClickListener ( e -> {
+            clearForm ( );
+            refreshGrid ( );
+        } );
 
-        save.addClickListener(e -> {
+        save.addClickListener ( e -> {
             try {
-                if (this.ticket == null) {
-                    this.ticket = new Ticket();
+                if ( this.ticket == null ) {
+                    this.ticket = new Ticket ( );
                 }
-                binder.writeBean(this.ticket);
-                this.ticket.setAttachment(attachmentPreview.getSrc());
+                binder.writeBean ( this.ticket );
+                this.ticket.setAttachment ( attachmentPreview.getSrc ( ) );
 
-                ticketService.update(this.ticket);
-                clearForm();
-                refreshGrid();
-                Notification.show("Ticket details stored.");
-                UI.getCurrent().navigate(AdminView.class);
-            } catch (ValidationException validationException) {
-                Notification.show("An exception happened while trying to store the ticket details.");
+                ticketService.update ( this.ticket );
+                clearForm ( );
+                refreshGrid ( );
+                Notification.show ( "Ticket details stored." );
+                UI.getCurrent ( ).navigate ( AdminView.class );
+            } catch ( ValidationException validationException ) {
+                Notification.show ( "An exception happened while trying to store the ticket details." );
             }
-        });
+        } );
     }
 
     @Override
-    public void beforeEnter(BeforeEnterEvent event) {
-        Optional<UUID> ticketId = event.getRouteParameters().get(TICKET_ID).map(UUID::fromString);
-        if (ticketId.isPresent()) {
-            Optional<Ticket> ticketFromBackend = ticketService.get(ticketId.get());
-            if (ticketFromBackend.isPresent()) {
-                populateForm(ticketFromBackend.get());
+    public void beforeEnter ( BeforeEnterEvent event ) {
+        Optional < UUID > ticketId = event.getRouteParameters ( ).get ( TICKET_ID ).map ( UUID :: fromString );
+        if ( ticketId.isPresent ( ) ) {
+            Optional < Ticket > ticketFromBackend = ticketService.get ( ticketId.get ( ) );
+            if ( ticketFromBackend.isPresent ( ) ) {
+                populateForm ( ticketFromBackend.get ( ) );
             } else {
-                Notification.show(String.format("The requested ticket was not found, ID = %s", ticketId.get()), 3000,
-                        Notification.Position.BOTTOM_START);
+                Notification.show ( String.format ( "The requested ticket was not found, ID = %s", ticketId.get ( ) ), 3000,
+                        Notification.Position.BOTTOM_START );
                 // when a row is selected but the data is no longer available,
                 // refresh grid
-                refreshGrid();
-                event.forwardTo(AdminView.class);
+                refreshGrid ( );
+                event.forwardTo ( AdminView.class );
             }
         }
     }
 
-    private void attachImageUpload(Upload upload, Image preview) {
-        ByteArrayOutputStream uploadBuffer = new ByteArrayOutputStream();
-        upload.setAcceptedFileTypes("image/*");
-        upload.setReceiver((fileName, mimeType) -> {
+    private void attachImageUpload ( Upload upload, Image preview ) {
+        ByteArrayOutputStream uploadBuffer = new ByteArrayOutputStream ( );
+        upload.setAcceptedFileTypes ( "image/*" );
+        upload.setReceiver ( ( fileName, mimeType ) -> {
             return uploadBuffer;
-        });
-        upload.addSucceededListener(e -> {
-            String mimeType = e.getMIMEType();
-            String base64ImageData = Base64.getEncoder().encodeToString(uploadBuffer.toByteArray());
+        } );
+        upload.addSucceededListener ( e -> {
+            String mimeType = e.getMIMEType ( );
+            String base64ImageData = Base64.getEncoder ( ).encodeToString ( uploadBuffer.toByteArray ( ) );
             String dataUrl = "data:" + mimeType + ";base64,"
-                    + UriUtils.encodeQuery(base64ImageData, StandardCharsets.UTF_8);
-            upload.getElement().setPropertyJson("files", Json.createArray());
-            preview.setSrc(dataUrl);
-            uploadBuffer.reset();
-        });
-        preview.setVisible(false);
+                    + UriUtils.encodeQuery ( base64ImageData, StandardCharsets.UTF_8 );
+            upload.getElement ( ).setPropertyJson ( "files", Json.createArray ( ) );
+            preview.setSrc ( dataUrl );
+            uploadBuffer.reset ( );
+        } );
+        preview.setVisible ( false );
     }
 
-    private void refreshGrid() {
-        grid.select(null);
-        grid.getLazyDataView().refreshAll();
+    private void refreshGrid ( ) {
+        grid.select ( null );
+        grid.getLazyDataView ( ).refreshAll ( );
     }
 
-    private void clearForm() {
-        populateForm(null);
+    private void clearForm ( ) {
+        populateForm ( null );
     }
 
-    private void populateForm(Ticket value) {
+    private void populateForm ( Ticket value ) {
         this.ticket = value;
-        binder.readBean(this.ticket);
-        this.attachmentPreview.setVisible(value != null);
-        if (value == null) {
-            this.attachmentPreview.setSrc("");
+        binder.readBean ( this.ticket );
+        this.attachmentPreview.setVisible ( value != null );
+        if ( value == null ) {
+            this.attachmentPreview.setSrc ( "" );
         } else {
-            this.attachmentPreview.setSrc(value.getAttachment());
+            this.attachmentPreview.setSrc ( value.getAttachment ( ) );
         }
 
     }
