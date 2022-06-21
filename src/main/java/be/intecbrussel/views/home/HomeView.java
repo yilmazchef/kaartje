@@ -66,8 +66,8 @@ public class HomeView extends Div implements AfterNavigationObserver {
 
                 Notification.show (
                         MessageFormat.format (
-                                "You liked the ticket {0} from {1}",
-                                ticketBinder.getTicketId ( ),
+                                "{0} liked the ticket from {1}",
+                                likeCreated.getCreatedBy ( ).getUsername ( ),
                                 ticketBinder.getName ( )
                         )
                         , 3000, Notification.Position.MIDDLE

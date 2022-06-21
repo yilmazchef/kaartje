@@ -15,7 +15,6 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.timepicker.TimePicker;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.security.PermitAll;
 
@@ -29,7 +28,6 @@ public class StudentView extends LitTemplate implements HasStyle {
 
     private final TicketService ticketService;
 
-    @Id
     private FormLayout formLayout;
 
     @Id
@@ -44,8 +42,7 @@ public class StudentView extends LitTemplate implements HasStyle {
     @Id
     private TimePicker to;
 
-    @Autowired
-    public StudentView ( TicketService ticketService ) {
+    public StudentView ( final TicketService ticketService ) {
         this.ticketService = ticketService;
 
 

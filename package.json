@@ -405,7 +405,6 @@
     "@vaadin/common-frontend": "$@vaadin/common-frontend",
     "construct-style-sheets-polyfill": "$construct-style-sheets-polyfill",
     "date-fns": "$date-fns",
-    "line-awesome": "$line-awesome",
     "lit": "$lit",
     "chokidar": "$chokidar"
   }
