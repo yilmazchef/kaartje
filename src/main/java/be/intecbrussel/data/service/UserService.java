@@ -15,43 +15,48 @@ public class UserService {
 
     private final UserRepository repository;
 
-    public UserService(UserRepository repository) {
+    public UserService ( UserRepository repository ) {
         this.repository = repository;
     }
 
     @Transactional
-    public Optional<User> get(UUID id) {
-        return repository.findById(id);
+    public Optional < User > get ( UUID id ) {
+        return repository.findById ( id );
     }
 
     @Transactional
-    public Optional<User> getByUsername(String username) {
-        return repository.findByUsername(username);
+    public Optional < User > findByUsername ( String username ) {
+        return repository.findByUsername ( username );
     }
 
     @Transactional
-    public Page<User> list() {
-        return list(PageRequest.of(0, 25));
+    public User getByUsername ( String username ) {
+        return repository.getByUsername ( username );
     }
 
     @Transactional
-    public User update(User entity) {
-        return repository.save(entity);
+    public Page < User > list ( ) {
+        return list ( PageRequest.of ( 0, 25 ) );
     }
 
     @Transactional
-    public void delete(UUID id) {
-        repository.deleteById(id);
+    public User update ( User entity ) {
+        return repository.save ( entity );
     }
 
     @Transactional
-    public Page<User> list(Pageable pageable) {
-        return repository.findAll(pageable);
+    public void delete ( UUID id ) {
+        repository.deleteById ( id );
     }
 
     @Transactional
-    public int count() {
-        return (int) repository.count();
+    public Page < User > list ( Pageable pageable ) {
+        return repository.findAll ( pageable );
+    }
+
+    @Transactional
+    public int count ( ) {
+        return ( int ) repository.count ( );
     }
 
 }

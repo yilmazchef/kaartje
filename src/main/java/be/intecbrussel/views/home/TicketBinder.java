@@ -8,12 +8,16 @@ import lombok.experimental.FieldDefaults;
 import org.hibernate.validator.constraints.URL;
 
 import javax.validation.constraints.NotEmpty;
+import java.util.UUID;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class TicketBinder {
+
+    @NotEmpty
+    UUID ticketId;
 
     @URL
     String image;

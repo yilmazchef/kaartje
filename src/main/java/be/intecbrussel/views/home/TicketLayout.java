@@ -4,91 +4,103 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.VaadinIcon;
-import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import lombok.Getter;
+
+import javax.validation.constraints.NotEmpty;
 
 public class TicketLayout extends HorizontalLayout {
 
-    public TicketLayout(TicketBinder ticketBinder) {
-        addClassName("ticket-layout");
-        setSizeFull();
+    @Getter
+    private final Image image = new Image ( );
 
-        addClassName("card");
-        setSpacing(false);
-        getThemeList().add("spacing-s");
+    @Getter
+    private final VerticalLayout description = new VerticalLayout ( );
 
-        final var image = new Image();
-        image.setSrc(ticketBinder.getImage());
+    @Getter
+    private final HorizontalLayout header = new HorizontalLayout ( );
 
-        final var description = new VerticalLayout();
-        description.addClassName("description");
-        description.setSpacing(false);
-        description.setPadding(false);
+    @Getter
+    private final Span name = new Span ( );
 
-        final var header = new HorizontalLayout();
-        header.addClassName("header");
-        header.setSpacing(false);
-        header.getThemeList().add("spacing-s");
+    @Getter
+    private final Span date = new Span ( );
 
-        final var name = new Span(ticketBinder.getName());
-        name.addClassName("name");
+    @Getter
+    private final Span post = new Span ( );
 
-        final var date = new Span(ticketBinder.getDate());
-        date.addClassName("date");
-        header.add(name, date);
+    @Getter
+    private final HorizontalLayout actions = new HorizontalLayout ( );
 
-        final var post = new Span(ticketBinder.getPost());
-        post.addClassName("post");
+    @Getter
+    private final Button likeButton = new Button ( );
 
-        final var actions = new HorizontalLayout();
-        actions.addClassName("actions");
-        actions.setSpacing(false);
-        actions.getThemeList().add("spacing-s");
+    @Getter
+    private final Button commentButton = new Button ( );
 
-        final var likeIcon = VaadinIcon.HEART.create();
-        final var likeButton = new Button(likeIcon, onClick -> {
-            Notification.show(
-                    "You liked " + ticketBinder.getName(),
-                    3000,
-                    Notification.Position.MIDDLE
-            );
-        });
-        likeButton.addClassName("icon");
+    @Getter
+    private final Button shareButton = new Button ( );
 
-        final var likes = new Span(ticketBinder.getLikes());
-        likes.addClassName("likes");
 
-        final var commentIcon = VaadinIcon.COMMENT.create();
-        final var commentButton = new Button(commentIcon, onClick -> {
-            Notification.show(
-                    "You commented " + ticketBinder.getName(),
-                    3000,
-                    Notification.Position.MIDDLE
-            );
-        });
-        commentButton.addClassName("icon");
+    public TicketLayout ( @NotEmpty final TicketBinder ticketBinder ) {
 
-        final var comments = new Span(ticketBinder.getComments());
-        comments.addClassName("comments");
+        addClassName ( "ticket-layout" );
+        setSizeFull ( );
 
-        final var shareIcon = VaadinIcon.CONNECT.create();
-        final var shareButton = new Button(shareIcon, onClick -> {
-            Notification.show(
-                    "You shared " + ticketBinder.getName(),
-                    3000,
-                    Notification.Position.MIDDLE
-            );
-        });
-        shareButton.addClassName("icon");
+        addClassName ( "card" );
+        setSpacing ( false );
+        getThemeList ( ).add ( "spacing-s" );
 
-        final var shares = new Span(ticketBinder.getShares());
-        shares.addClassName("shares");
+        image.setSrc ( ticketBinder.getImage ( ) );
 
-        actions.add(likeButton, likes, commentButton, comments, shareButton, shares);
+        description.addClassName ( "description" );
+        description.setSpacing ( false );
+        description.setPadding ( false );
 
-        description.add(header, post, actions);
-        add(image, description);
+        header.addClassName ( "header" );
+        header.setSpacing ( false );
+        header.getThemeList ( ).add ( "spacing-s" );
+
+        name.setText ( ticketBinder.getName ( ) );
+        name.addClassName ( "name" );
+
+        date.setText ( ticketBinder.getDate ( ) );
+        date.addClassName ( "date" );
+        header.add ( name, date );
+
+        post.setText ( ticketBinder.getPost ( ) );
+        post.addClassName ( "post" );
+
+        actions.addClassName ( "actions" );
+        actions.setSpacing ( false );
+        actions.getThemeList ( ).add ( "spacing-s" );
+
+        final var likeIcon = VaadinIcon.HEART.create ( );
+        likeButton.setIcon ( likeIcon );
+        likeButton.addClassName ( "icon" );
+
+        final var likes = new Span ( ticketBinder.getLikes ( ) );
+        likes.addClassName ( "likes" );
+
+        final var commentIcon = VaadinIcon.COMMENT.create ( );
+        commentButton.setIcon ( commentIcon );
+        commentButton.addClassName ( "icon" );
+
+        final var comments = new Span ( ticketBinder.getComments ( ) );
+        comments.addClassName ( "comments" );
+
+        final var shareIcon = VaadinIcon.CONNECT.create ( );
+        shareButton.setIcon ( shareIcon );
+        shareButton.addClassName ( "icon" );
+
+        final var shares = new Span ( ticketBinder.getShares ( ) );
+        shares.addClassName ( "shares" );
+
+        actions.add ( likeButton, likes, commentButton, comments, shareButton, shares );
+
+        description.add ( header, post, actions );
+        add ( image, description );
     }
 
 }

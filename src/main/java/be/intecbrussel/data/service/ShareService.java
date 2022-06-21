@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -24,6 +25,11 @@ public class ShareService {
     }
 
     @Transactional
+    public Share create(Share entity) {
+        return repository.save(entity);
+    }
+
+    @Transactional
     public Share update(Share entity) {
         return repository.save(entity);
     }
@@ -39,8 +45,18 @@ public class ShareService {
     }
 
     @Transactional
+    public List<Share> list() {
+        return repository.findAll();
+    }
+
+    @Transactional
     public Page<Share> list(UUID ticketId, Pageable pageable) {
-        return repository.findAllByTicketId(ticketId, pageable);
+        return repository.findAllByTicket(ticketId, pageable);
+    }
+
+    @Transactional
+    public List<Share> list(UUID ticketId) {
+        return repository.findAllByTicket(ticketId);
     }
 
     @Transactional

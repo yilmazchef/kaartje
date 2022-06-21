@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="start app" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+  <configuration default="false" name="run-maven-jar" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
     <option name="ACTIVE_PROFILES" />
     <envs>
       <env name="PORT" value="8888" />

@@ -14,38 +14,43 @@ public class LikeService {
 
     private final LikeRepository repository;
 
-    public LikeService(LikeRepository repository) {
+    public LikeService ( LikeRepository repository ) {
         this.repository = repository;
     }
 
     @Transactional
-    public Optional<Like> get(UUID id) {
-        return repository.findById(id);
+    public Optional < Like > get ( UUID id ) {
+        return repository.findById ( id );
     }
 
     @Transactional
-    public Like update(Like entity) {
-        return repository.save(entity);
+    public Like create ( Like entity ) {
+        return repository.save ( entity );
     }
 
     @Transactional
-    public void delete(UUID id) {
-        repository.deleteById(id);
+    public Like update ( Like entity ) {
+        return repository.save ( entity );
     }
 
     @Transactional
-    public Page<Like> list(Pageable pageable) {
-        return repository.findAll(pageable);
+    public void delete ( UUID id ) {
+        repository.deleteById ( id );
     }
 
     @Transactional
-    public Page<Like> list(UUID ticketId, Pageable pageable) {
-        return repository.findAllByTicketId(ticketId, pageable);
+    public Page < Like > list ( Pageable pageable ) {
+        return repository.findAll ( pageable );
     }
 
     @Transactional
-    public int count() {
-        return (int) repository.count();
+    public Page < Like > list ( UUID ticketId, Pageable pageable ) {
+        return repository.findAllByTicketId ( ticketId, pageable );
+    }
+
+    @Transactional
+    public int count ( ) {
+        return ( int ) repository.count ( );
     }
 
 }

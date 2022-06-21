@@ -17,7 +17,15 @@ public interface CommentRepository extends JpaRepository<Comment, UUID>, JpaSpec
     @Query("select c from Comment c where c.ticket.id = :ticketId")
     Page<Comment> findAllByTicket(@Param("ticketId") @NotNull UUID ticketId, Pageable pageable);
 
-    @Query("select c from Comment c where c.ticket.id = :ticket_id")
-    List<Comment> findAllByTicket(@Param("ticket_id") @NotNull UUID ticket_id);
+    @Query("select c from Comment c where c.ticket.id = :ticketId")
+    List<Comment> findAllByTicket(@Param("ticketId") @NotNull UUID ticketId);
+
+    @Query("select c from Comment c where c.isDeleted = true")
+    List<Comment> findAllActive();
+
+    @Query("select c from Comment c where c.isDeleted = false")
+    List<Comment> findAllDeleted();
+
+
 
 }

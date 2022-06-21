@@ -14,33 +14,43 @@ public class TicketService {
 
     private final TicketRepository repository;
 
-    public TicketService(final TicketRepository repository) {
+    public TicketService ( final TicketRepository repository ) {
         this.repository = repository;
     }
 
     @Transactional
-    public Optional<Ticket> get(UUID id) {
-        return repository.findById(id);
+    public Optional < Ticket > get ( UUID id ) {
+        return repository.findById ( id );
     }
 
     @Transactional
-    public Ticket update(Ticket entity) {
-        return repository.save(entity);
+    public Ticket getOne ( UUID id ) {
+        return repository.getReferenceById ( id );
     }
 
     @Transactional
-    public void delete(UUID id) {
-        repository.deleteById(id);
+    public Ticket create ( Ticket entity ) {
+        return repository.save ( entity );
     }
 
     @Transactional
-    public Page<Ticket> list(Pageable pageable) {
-        return repository.findAll(pageable);
+    public Ticket update ( Ticket entity ) {
+        return repository.save ( entity );
     }
 
     @Transactional
-    public int count() {
-        return (int) repository.count();
+    public void delete ( UUID id ) {
+        repository.deleteById ( id );
+    }
+
+    @Transactional
+    public Page < Ticket > list ( Pageable pageable ) {
+        return repository.findAll ( pageable );
+    }
+
+    @Transactional
+    public int count ( ) {
+        return ( int ) repository.count ( );
     }
 
 }

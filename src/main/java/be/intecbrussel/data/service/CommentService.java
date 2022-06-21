@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -34,13 +35,23 @@ public class CommentService {
     }
 
     @Transactional
-    public Page<Comment> list(Pageable pageable) {
+    public Page<Comment> pages(Pageable pageable) {
         return repository.findAll(pageable);
     }
 
     @Transactional
-    public Page<Comment> list(UUID ticketId, Pageable pageable) {
+    public List<Comment> list() {
+        return repository.findAllActive();
+    }
+
+    @Transactional
+    public Page<Comment> pages(UUID ticketId, Pageable pageable) {
         return repository.findAllByTicket(ticketId, pageable);
+    }
+
+    @Transactional
+    public List<Comment> list(UUID ticketId) {
+        return repository.findAllByTicket(ticketId);
     }
 
     @Transactional

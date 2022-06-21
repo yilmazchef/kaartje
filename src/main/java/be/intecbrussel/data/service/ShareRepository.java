@@ -5,14 +5,19 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 import java.util.UUID;
 
 public interface ShareRepository extends JpaRepository<Share, UUID>, JpaSpecificationExecutor<Share> {
 
-    Page<Share> findAllByTicketId(@NotNull UUID ticketId, Pageable pageable);
+    @Query("select s from Share s where s.ticket.id = :ticketId")
+    Page<Share> findAllByTicket(@Param("ticketId") @NotNull UUID ticketId, Pageable pageable);
 
-    Page<Share> findAllByTicket_Id(@NotNull UUID ticketId, Pageable pageable);
+    @Query("select s from Share s where s.ticket.id = :ticketId")
+    List<Share> findAllByTicket(@Param("ticketId") @NotNull UUID ticketId);
 
 }

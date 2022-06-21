@@ -9,10 +9,10 @@ import javax.validation.constraints.NotEmpty;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface UserRepository extends JpaRepository<User, UUID>, JpaSpecificationExecutor<User> {
+public interface UserRepository extends JpaRepository < User, UUID >, JpaSpecificationExecutor < User > {
 
-    Optional<User> findByUsername(@NotEmpty @Email final String username);
+    Optional < User > findByUsername ( @NotEmpty @Email final String username );
 
-    User getByUsername(@NotEmpty @Email final String username);
+    User getByUsername ( @NotEmpty @Email final String username );
 
 }
