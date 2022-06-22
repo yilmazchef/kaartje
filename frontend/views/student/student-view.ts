@@ -23,10 +23,10 @@ export class StudentView extends LitElement {
     render() {
         return html`
             <vaadin-form-layout .responsiveSteps="${this.responsiveSteps}">
-                <vaadin-text-field id="title" label="Title" colspan="3"></vaadin-text-field>
+                <vaadin-text-field id="subject" label="Subject" colspan="3"></vaadin-text-field>
                 <vaadin-date-picker id="date" label="Date"></vaadin-date-picker>
-                <vaadin-time-picker id="from" label="From"></vaadin-time-picker>
-                <vaadin-time-picker id="to" label="To"></vaadin-time-picker>
+                <vaadin-text-field id="from" label="From"></vaadin-text-field>
+                <vaadin-text-field id="to" label="To"></vaadin-text-field>
                 <vaadin-text-area id="message" label="Message"></vaadin-text-area>
                 <vaadin-button id="submit">Submit</vaadin-button>
             </vaadin-form-layout>

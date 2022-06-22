@@ -406,7 +406,6 @@
     "construct-style-sheets-polyfill": "$construct-style-sheets-polyfill",
     "date-fns": "$date-fns",
     "lit": "$lit",
-    "chokidar": "$chokidar",
-    "line-awesome": "$line-awesome"
+    "chokidar": "$chokidar"
   }
 }
