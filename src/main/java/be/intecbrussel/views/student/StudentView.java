@@ -69,6 +69,7 @@ public class StudentView extends LitTemplate implements HasStyle {
         message.setValue ( "Hier komt het bericht" );
 
         final var oToUser = this.userService.findByUsername ( to.getValue ( ) );
+        // TODO add textValueChangeEvent ..
         final var oFromUser = authenticatedUser.get ( );
 
         if ( oFromUser.isPresent ( ) && oToUser.isPresent ( ) ) {
