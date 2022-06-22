@@ -1,6 +1,7 @@
 import {html, LitElement} from 'lit';
 import {customElement} from 'lit/decorators.js';
 import '@vaadin/date-picker';
+import '@vaadin/vaadin-button';
 import '@vaadin/form-layout';
 import {FormLayoutResponsiveStep} from '@vaadin/form-layout';
 import '@vaadin/text-field';
@@ -8,6 +9,7 @@ import '@vaadin/time-picker';
 
 @customElement('student-view')
 export class StudentView extends LitElement {
+
     protected createRenderRoot() {
         // Do not use a shadow root
         return this;
@@ -25,6 +27,8 @@ export class StudentView extends LitElement {
                 <vaadin-date-picker id="date" label="Date"></vaadin-date-picker>
                 <vaadin-time-picker id="from" label="From"></vaadin-time-picker>
                 <vaadin-time-picker id="to" label="To"></vaadin-time-picker>
+                <vaadin-text-area id="message" label="Message"></vaadin-text-area>
+                <vaadin-button id="submit">Submit</vaadin-button>
             </vaadin-form-layout>
         `;
     }

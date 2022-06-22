@@ -4,6 +4,7 @@ import be.intecbrussel.data.service.TicketService;
 import be.intecbrussel.views.MainLayout;
 import com.vaadin.flow.component.HasStyle;
 import com.vaadin.flow.component.Tag;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.dependency.Uses;
@@ -11,6 +12,7 @@ import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.littemplate.LitTemplate;
 import com.vaadin.flow.component.template.Id;
+import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.timepicker.TimePicker;
 import com.vaadin.flow.router.PageTitle;
@@ -42,8 +44,18 @@ public class StudentView extends LitTemplate implements HasStyle {
     @Id
     private TimePicker to;
 
+    @Id
+    private TextArea message;
+
+    @Id
+    private Button submit;
+
     public StudentView ( final TicketService ticketService ) {
         this.ticketService = ticketService;
+
+        message.setMaxLength ( 1000 );
+        message.setRequired ( true );
+        message.setValue ( "Hier komt het bericht" );
 
 
     }

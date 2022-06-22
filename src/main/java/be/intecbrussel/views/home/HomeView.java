@@ -22,6 +22,7 @@ import java.time.format.DateTimeFormatter;
 @PermitAll
 public class HomeView extends Div implements AfterNavigationObserver {
 
+    private static final String ROUTE = "home";
     private final Grid < TicketBinder > grid = new Grid <> ( );
     private final TicketService ticketService;
     private final AuthenticatedUser authenticatedUser;
