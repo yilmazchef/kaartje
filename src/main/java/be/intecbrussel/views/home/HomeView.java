@@ -53,7 +53,9 @@ public class HomeView extends Div implements AfterNavigationObserver {
         this.grid.setHeight ( "100%" );
         this.grid.addThemeVariants ( GridVariant.LUMO_NO_BORDER, GridVariant.LUMO_NO_ROW_BORDERS );
         this.grid.addComponentColumn ( ticketBinder -> {
-            final TicketLayout ticketLayout = new TicketLayout ( ticketBinder );
+
+            final var ticketLayout = new TicketLayout ( ticketBinder );
+
             ticketLayout.getLikeButton ( ).addClickListener ( onClick -> {
                 final var likeCreated = likeService.create (
                         new Like ( )
@@ -65,14 +67,19 @@ public class HomeView extends Div implements AfterNavigationObserver {
                                 )
                 );
 
-                Notification.show (
-                        MessageFormat.format (
-                                "{0} liked the ticket from {1}",
-                                likeCreated.getCreatedBy ( ).getUsername ( ),
-                                ticketBinder.getName ( )
-                        )
-                        , 3000, Notification.Position.MIDDLE
-                );
+                if ( likeCreated != null ) {
+                    Notification.show (
+                            MessageFormat.format (
+                                    "{0} liked the ticket from {1}",
+                                    likeCreated.getCreatedBy ( ).getUsername ( ),
+                                    ticketBinder.getName ( )
+                            )
+                            , 3000, Notification.Position.MIDDLE
+                    );
+                } else {
+                    Notification.show ( "You have already liked this ticket before." );
+                }
+
 
             } );
 
