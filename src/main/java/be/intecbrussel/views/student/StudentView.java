@@ -14,6 +14,7 @@ import com.vaadin.flow.component.dependency.Uses;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.littemplate.LitTemplate;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.template.Id;
 import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
@@ -21,7 +22,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
 import javax.annotation.security.PermitAll;
-import java.time.LocalDateTime;
+import java.text.MessageFormat;
 
 @PageTitle ( "Intec | Maak een nieuwe ticket aan.." )
 @Route ( value = "student", layout = MainLayout.class )
@@ -64,43 +65,49 @@ public class StudentView extends LitTemplate implements HasStyle {
         this.authenticatedUser = authenticatedUser;
         this.userService = userService;
 
+        from.setReadOnly ( true );
+
         message.setMaxLength ( 1000 );
         message.setRequired ( true );
-        message.setValue ( "Hier komt het bericht" );
 
-        final var oToUser = this.userService.findByUsername ( to.getValue ( ) );
-        // TODO add textValueChangeEvent ..
         final var oFromUser = authenticatedUser.get ( );
 
-        if ( oFromUser.isPresent ( ) && oToUser.isPresent ( ) ) {
+        oFromUser.ifPresent ( user -> from.setValue ( user.getUsername ( ) ) );
 
-            final var fromUser = oFromUser.get ( );
-            final var toUser = oToUser.get ( );
+        submit.addClickListener ( onClick -> {
 
-            this.from.setValue ( fromUser.getUsername ( ) );
+            final var oToUser = this.userService.findByUsername ( to.getValue ( ) );
 
-            submit.addClickListener ( onClick -> {
+            if ( oFromUser.isPresent ( ) && oToUser.isPresent ( ) ) {
 
-                final var now = LocalDateTime.now ( );
-                this.ticketService.create (
-                        new Ticket ( )
-                                .setPriority ( 1 )
-                                .setType ( "ISSUE" )
-                                .setIsDeleted ( false )
-                                .setSubject ( subject.getValue ( ) )
-                                .setMessage ( message.getValue ( ) )
-                                .setCreatedBy ( fromUser )
-                                .setAssignedTo ( toUser )
-                                .setCreatedAt ( now )
-                                .setUpdatedBy ( fromUser )
-                                .setUpdatedAt ( now )
-                                .setStatus ( "TODO" )
-                                .setLikes ( 0 )
-                                .setTags ( "student,issue" )
+                final var fromUser = oFromUser.get ( );
+                final var toUser = oToUser.get ( );
+
+                this.from.setValue ( fromUser.getUsername ( ) );
+                final var newTicketRequest = new Ticket ( )
+                        .setSubject ( subject.getValue ( ) )
+                        .setMessage ( message.getValue ( ) )
+                        .setCreatedBy ( fromUser )
+                        .setAssignedTo ( toUser )
+                        .setUpdatedBy ( fromUser )
+                        .setTags ( "student,issue" );
+
+                final var savedTicketResponse = this.ticketService.create (
+                        newTicketRequest
                 );
 
-            } );
-        }
+                Notification.show (
+                        MessageFormat.format (
+                                "Ticket met id {0} is aangemaakt",
+                                savedTicketResponse.getId ( )
+                        ),
+                        3000,
+                        Notification.Position.MIDDLE
+                );
+            }
+
+
+        } );
 
 
     }
