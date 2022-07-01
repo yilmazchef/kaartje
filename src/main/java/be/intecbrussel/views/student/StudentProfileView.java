@@ -1,6 +1,5 @@
 package be.intecbrussel.views.student;
 
-import be.intecbrussel.data.entity.User;
 import be.intecbrussel.data.service.UserService;
 import be.intecbrussel.security.AuthenticatedUser;
 import be.intecbrussel.views.MainLayout;
@@ -55,8 +54,6 @@ public class StudentProfileView extends LitTemplate implements HasStyle {
         this.authenticatedUser = authenticatedUser;
         this.userService = userService;
 
-        lastName.setReadOnly ( true );
-
         final var oUser = authenticatedUser.get ( );
 
         final var userProfile = oUser.map (
@@ -79,12 +76,8 @@ public class StudentProfileView extends LitTemplate implements HasStyle {
 
                     return existingUser;
                 }
-        ).orElse (
-                new User ( )
-                        .setFirstName ( firstName.getValue ( ) )
-                        .setLastName ( lastName.getValue ( ) )
-                        .setUsername ( email.getValue ( ) )
-                        .setPhone ( phone.getValue ( ) )
+        ).orElseThrow (
+                ( ) -> new IllegalStateException ( "User not found" )
         );
 
         submit.addClickListener ( onClick -> {
