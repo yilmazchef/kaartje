@@ -11,8 +11,6 @@ import java.util.UUID;
 
 public interface LikeRepository extends JpaRepository<Like, UUID>, JpaSpecificationExecutor<Like> {
 
-    Page<Like> findAllByTicketId(@NotNull UUID ticketId, Pageable pageable);
-
     Page<Like> findAllByTicket_Id(@NotNull UUID ticketId, Pageable pageable);
 
 }

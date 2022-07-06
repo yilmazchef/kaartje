@@ -30,4 +30,9 @@ public class UserDto implements Serializable {
     private Set < Role > roles = new HashSet <> ( );
     @URL ( message = "Please provide a valid Profile Image URL" )
     private String profilePictureUrl;
+
+    @Override
+    public String toString ( ) {
+        return this.getFirstName ( ) + " " + this.getLastName ( );
+    }
 }

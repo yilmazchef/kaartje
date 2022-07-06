@@ -32,4 +32,9 @@ public class TicketDto implements Serializable {
     private String tags;
     private Integer likes;
     private BoardDto board;
+
+    @Override
+    public String toString(){
+        return this.getSubject ();
+    }
 }

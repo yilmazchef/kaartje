@@ -62,7 +62,7 @@ public class LikeService {
     public Optional < LikeDto > getDto ( @NotNull final UUID id ) {
         return repository
                 .findById ( id )
-                .map ( mapper::likeToLikeDto );
+                .map ( mapper :: likeToLikeDto );
     }
 
     @Transactional
@@ -100,9 +100,9 @@ public class LikeService {
     }
 
     @Transactional
-    public Page < LikeDto > listDto ( @NotNull final UUID ticketId, @NotNull final Pageable pageable ) {
+    public Page < LikeDto > listByTicketIdDto ( @NotNull final UUID ticketId, @NotNull final Pageable pageable ) {
         return repository
-                .findAllByTicketId ( ticketId, pageable )
+                .findAllByTicket_Id ( ticketId, pageable )
                 .map ( mapper :: likeToLikeDto );
     }
 

@@ -30,4 +30,9 @@ public class CommentDto implements Serializable {
     private Float score;
     private String tags;
     private TicketDto ticket;
+
+    @Override
+    public String toString ( ) {
+        return this.getMessage ( );
+    }
 }

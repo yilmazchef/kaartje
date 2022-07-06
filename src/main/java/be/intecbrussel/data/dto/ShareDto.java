@@ -22,4 +22,11 @@ public class ShareDto implements Serializable {
     private String sharedOn;
     private Integer viewsCount;
     private TicketDto ticket;
+
+    @Override
+    public String toString ( ) {
+        return this.getCreatedBy ( ).toString ( )
+                + " shared {" + this.getTicket ( ).toString ( ) + "} via the link below:\n"
+                + this.getSharedOn ( );
+    }
 }

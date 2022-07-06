@@ -19,4 +19,9 @@ public class CategoryDto implements Serializable {
     private UserDto createdBy;
     private UserDto updatedBy;
     private String alias;
+
+    @Override
+    public String toString() {
+        return this.getTitle();
+    }
 }

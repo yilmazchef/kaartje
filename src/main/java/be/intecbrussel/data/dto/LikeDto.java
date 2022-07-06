@@ -18,4 +18,9 @@ public class LikeDto implements Serializable {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private TicketDto ticket;
+
+    @Override
+    public String toString(){
+        return this.getCreatedBy ().toString () + " liked " + this.getTicket ().toString ();
+    }
 }

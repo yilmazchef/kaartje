@@ -30,4 +30,9 @@ public class BoardDto implements Serializable {
     private String description;
     @URL
     private String background;
+
+    @Override
+    public String toString ( ) {
+        return this.getTitle ( ) + " {" + this.getStatus ( ) + "}";
+    }
 }

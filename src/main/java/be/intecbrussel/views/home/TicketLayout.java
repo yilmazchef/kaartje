@@ -1,5 +1,6 @@
 package be.intecbrussel.views.home;
 
+import be.intecbrussel.data.dto.TicketDto;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Span;
@@ -43,7 +44,7 @@ public class TicketLayout extends HorizontalLayout {
     private final Button shareButton = new Button ( );
 
 
-    public TicketLayout ( @NotEmpty final TicketBinder ticketBinder ) {
+    public TicketLayout ( @NotEmpty final TicketDto ticketDto ) {
 
         addClassName ( "ticket-layout" );
         setSizeFull ( );
@@ -52,7 +53,7 @@ public class TicketLayout extends HorizontalLayout {
         setSpacing ( false );
         getThemeList ( ).add ( "spacing-s" );
 
-        image.setSrc ( ticketBinder.getImage ( ) );
+        image.setSrc ( ticketDto.getCreatedBy ( ).getProfilePictureUrl ( ) );
 
         description.addClassName ( "description" );
         description.setSpacing ( false );
@@ -62,14 +63,14 @@ public class TicketLayout extends HorizontalLayout {
         header.setSpacing ( false );
         header.getThemeList ( ).add ( "spacing-s" );
 
-        name.setText ( ticketBinder.getName ( ) );
+        name.setText ( ticketDto.getCreatedBy ( ).toString () );
         name.addClassName ( "name" );
 
-        date.setText ( ticketBinder.getDate ( ) );
+        date.setText ( ticketDto.getDate ( ) );
         date.addClassName ( "date" );
         header.add ( name, date );
 
-        post.setText ( ticketBinder.getPost ( ) );
+        post.setText ( ticketDto.getPost ( ) );
         post.addClassName ( "post" );
 
         actions.addClassName ( "actions" );
@@ -80,21 +81,21 @@ public class TicketLayout extends HorizontalLayout {
         likeButton.setIcon ( likeIcon );
         likeButton.addClassName ( "icon" );
 
-        final var likes = new Span ( ticketBinder.getLikes ( ) );
+        final var likes = new Span ( ticketDto.getLikes ( ) );
         likes.addClassName ( "likes" );
 
         final var commentIcon = VaadinIcon.COMMENT.create ( );
         commentButton.setIcon ( commentIcon );
         commentButton.addClassName ( "icon" );
 
-        final var comments = new Span ( ticketBinder.getComments ( ) );
+        final var comments = new Span ( ticketDto.getComments ( ) );
         comments.addClassName ( "comments" );
 
         final var shareIcon = VaadinIcon.CONNECT.create ( );
         shareButton.setIcon ( shareIcon );
         shareButton.addClassName ( "icon" );
 
-        final var shares = new Span ( ticketBinder.getShares ( ) );
+        final var shares = new Span ( ticketDto.getShares ( ) );
         shares.addClassName ( "shares" );
 
         actions.add ( likeButton, likes, commentButton, comments, shareButton, shares );

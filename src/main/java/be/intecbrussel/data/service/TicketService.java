@@ -86,7 +86,7 @@ public class TicketService {
     }
 
     @Transactional
-    public Page < TicketDto > listDTO ( Pageable pageable ) {
+    public Page < TicketDto > listDto ( Pageable pageable ) {
         return repository
                 .findAll ( pageable )
                 .map ( mapper :: ticketToTicketDto );
