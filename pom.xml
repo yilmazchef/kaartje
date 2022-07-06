@@ -12,6 +12,9 @@
         <java.version>11</java.version>
         <vaadin.version>23.1.0</vaadin.version>
         <selenium.version>4.1.2</selenium.version>
+        <org.mapstruct.version>1.5.2.Final</org.mapstruct.version>
+        <org.projectlombok.version>1.18.24</org.projectlombok.version>
+        <org.projectlombok.lombokmap.version>0.2.0</org.projectlombok.lombokmap.version>
     </properties>
 
     <parent>
@@ -156,22 +159,36 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.22</version>
+            <version>${org.projectlombok.version}</version>
             <scope>provided</scope>
         </dependency>
+        
         <dependency>
             <groupId>com.github.javafaker</groupId>
             <artifactId>javafaker</artifactId>
             <version>1.0.2</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+            <version>${org.mapstruct.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok-mapstruct-binding</artifactId>
+            <version>${org.projectlombok.lombokmap.version}</version>
+        </dependency>
+
+
     </dependencies>
 
     <build>
 
         <finalName>${project.artifactId}</finalName>
-
         <defaultGoal>spring-boot:run</defaultGoal>
+
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -205,12 +222,40 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>11</source> <!-- depending on your project -->
+                    <target>11</target> <!-- depending on your project -->
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.mapstruct</groupId>
+                            <artifactId>mapstruct-processor</artifactId>
+                            <version>${org.mapstruct.version}</version>
+                        </path>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${org.projectlombok.version}</version>
+                        </path>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok-mapstruct-binding</artifactId>
+                            <version>${org.projectlombok.lombokmap.version}</version>
+                        </path>
+                        <!-- other annotation processors -->
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+
         </plugins>
     </build>
 
     <profiles>
         <profile>
-            <!-- Production mode is activated using -Pproduction -->
             <id>production</id>
             <activation>
                 <activeByDefault>true</activeByDefault>

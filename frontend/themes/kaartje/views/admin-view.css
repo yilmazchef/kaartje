@@ -1,44 +1,70 @@
-tickets-view {
-  display: flex;
-  flex-direction: column;
+.admin-view {
+  display: block;
   height: 100%;
 }
 
-tickets-view vaadin-split-layout {
-  width: 100%;
+.admin-view vaadin-grid {
   height: 100%;
+  line-height: var(--lumo-line-height-m);
 }
 
-tickets-view vaadin-grid {
-  height: 100%;
+.admin-view vaadin-grid,
+.admin-view vaadin-grid-cell-content {
+  background-color: var(--lumo-contrast-10pct);
 }
 
-tickets-view .editor-layout {
-  display: flex;
-  flex-direction: column;
-  width: 400px;
+.admin-view .card {
+  background-color: var(--lumo-base-color);
+  border-radius: var(--lumo-border-radius);
+  box-shadow: var(--lumo-box-shadow-xs);
+  padding: calc(var(--lumo-space-s) * 1.5) var(--lumo-space-m);
 }
 
-tickets-view .editor {
-  flex-grow: 1;
-  padding: var(--lumo-space-l);
+.admin-view img {
+  border-radius: 50%;
+  flex-shrink: 0;
+  height: var(--lumo-size-m);
+  margin-right: calc(var(--lumo-space-s) * 1.5);
+  width: var(--lumo-size-m);
 }
 
-tickets-view .editor vaadin-checkbox {
-  padding-top: var(--lumo-space-m);
+.admin-view .header {
+  align-items: baseline;
 }
 
-tickets-view .button-layout {
-  width: 100%;
-  flex-wrap: wrap;
-  background-color: var(--lumo-contrast-5pct);
-  padding-bottom: var(--lumo-space-s);
-  padding-top: var(--lumo-space-s);
-  padding-left: var(--lumo-space-l);
-  padding-right: var(--lumo-space-l);
-  gap: var(--lumo-space-m);
+.admin-view .name {
+  font-size: var(--lumo-font-size-s);
+  font-weight: bold;
+  margin-right: var(--lumo-space-s);
 }
 
-tickets-view .grid-wrapper {
-  width: 100%;
+.admin-view .date {
+  color: var(--lumo-tertiary-text-color);
+  font-size: var(--lumo-font-size-xs);
+}
+
+.admin-view .post {
+  color: var(--lumo-secondary-text-color);
+  font-size: var(--lumo-font-size-s);
+  margin-bottom: var(--lumo-space-s);
+  white-space: normal;
+}
+
+.admin-view .actions {
+  align-items: center;
+}
+
+.admin-view .icon {
+  color: var(--lumo-tertiary-text-color);
+  height: calc(var(--lumo-icon-size-s) * 0.8);
+  margin-right: var(--lumo-space-s);
+  width: calc(var(--lumo-icon-size-s) * 0.8);
+}
+
+.admin-view .likes,
+.admin-view .comments,
+.admin-view .shares {
+  color: var(--lumo-tertiary-text-color);
+  font-size: var(--lumo-font-size-xs);
+  margin-right: var(--lumo-space-l);
 }
