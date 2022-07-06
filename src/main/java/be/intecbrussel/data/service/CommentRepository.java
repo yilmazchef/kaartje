@@ -26,6 +26,9 @@ public interface CommentRepository extends JpaRepository<Comment, UUID>, JpaSpec
     @Query("select c from Comment c where c.isDeleted = false")
     List<Comment> findAllDeleted();
 
+    @Query ( "select count(l) from Comment c where c.ticket.id = :ticketId" )
+    Integer countByTicket ( @Param ( "ticketId" ) @NotNull final UUID ticketId );
+
 
 
 }

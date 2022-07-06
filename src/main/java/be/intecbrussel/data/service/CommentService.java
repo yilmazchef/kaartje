@@ -74,6 +74,16 @@ public class CommentService {
     }
 
     @Transactional
+    public CommentDto createDto ( CommentDto dto ) {
+        return
+                mapper.commentToCommentDto (
+                        repository.save (
+                                mapper.commentDtoToComment ( dto )
+                        )
+                );
+    }
+
+    @Transactional
     public CommentDto updateDto ( CommentDto dto ) {
         return
                 mapper.commentToCommentDto (
@@ -107,7 +117,7 @@ public class CommentService {
     }
 
     @Transactional
-    public Page < CommentDto > pagesDto ( UUID ticketId, Pageable pageable ) {
+    public Page < CommentDto > listByTicketIdDto ( UUID ticketId, Pageable pageable ) {
         return repository
                 .findAllByTicket ( ticketId, pageable )
                 .map ( mapper :: commentToCommentDto );

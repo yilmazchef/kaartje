@@ -1,8 +1,7 @@
 package be.intecbrussel.views.home;
 
+import be.intecbrussel.data.dto.TicketDto;
 import be.intecbrussel.data.entity.Like;
-import be.intecbrussel.data.service.*;
-import be.intecbrussel.security.AuthenticatedUser;
 import be.intecbrussel.views.MainLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.GridVariant;
@@ -23,38 +22,34 @@ import java.time.format.DateTimeFormatter;
 public class HomeView extends Div implements AfterNavigationObserver {
 
     private static final String ROUTE = "home";
-    private final Grid < TicketBinder > grid = new Grid <> ( );
-    private final TicketService ticketService;
-    private final AuthenticatedUser authenticatedUser;
+    private final Grid < TicketDto > grid = new Grid <> ( );
 
-    private final UserService userService;
-    private final LikeService likeService;
-    private final ShareService shareService;
+    private final HomeApi api;
 
-    private final CommentService commentService;
-
-    public HomeView (
-            final TicketService ticketService,
-            final AuthenticatedUser authenticatedUser,
-            final UserService userService,
-            final LikeService likeService,
-            final ShareService shareService,
-            final CommentService commentService
-    ) {
-        this.ticketService = ticketService;
-        this.authenticatedUser = authenticatedUser;
-        this.userService = userService;
-        this.likeService = likeService;
-        this.shareService = shareService;
-        this.commentService = commentService;
+    public HomeView ( final HomeApi api ) {
+        this.api = api;
 
         addClassName ( "home-view" );
         setSizeFull ( );
+
         this.grid.setHeight ( "100%" );
         this.grid.addThemeVariants ( GridVariant.LUMO_NO_BORDER, GridVariant.LUMO_NO_ROW_BORDERS );
-        this.grid.addComponentColumn ( ticketBinder -> {
+        this.grid.addComponentColumn ( dto -> {
 
-            final var ticketLayout = new TicketLayout ( ticketBinder );
+            final long likesCount = api.getLikesCount ( dto.getTicketId ( ) );
+            final long sharesCount = api.getSharesCount ( dto.getTicketId ( ) );
+            final long commentsCount = api.getCommentsCount ( dto.getTicketId ( ) );
+
+
+            final var ticketLayout = new TicketLayout (
+                    dto.getCreatedBy ( ).getUsername ( ),
+                    dto.getCreatedAt ( ).format ( DateTimeFormatter.ofPattern ( "dd-MM-yyyy HH:mm:ss" ) ),
+                    dto.getMessage ( ),
+                    dto.getCreatedBy ( ).getProfilePictureUrl ( ),
+                    dto.getLikes ( ),
+                    dto.getShares ( ).size ( ),
+                    dto.getComments ( ).size ( )
+            );
 
             ticketLayout.getLikeButton ( ).addClickListener ( onClick -> {
                 final var likeCreated = likeService.create (
@@ -63,7 +58,7 @@ public class HomeView extends Div implements AfterNavigationObserver {
                                         ( ) -> new IllegalStateException ( "Authenticated user is not set in the session. Please try to login again." )
                                 ) )
                                 .setTicket (
-                                        ticketService.getOne ( ticketBinder.getTicketId ( ) )
+                                        ticketService.getOne ( dto.getTicketId ( ) )
                                 )
                 );
 
@@ -72,7 +67,7 @@ public class HomeView extends Div implements AfterNavigationObserver {
                             MessageFormat.format (
                                     "{0} liked the ticket from {1}",
                                     likeCreated.getCreatedBy ( ).getUsername ( ),
-                                    ticketBinder.getName ( )
+                                    dto.getName ( )
                             )
                             , 3000, Notification.Position.MIDDLE
                     );

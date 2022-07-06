@@ -121,7 +121,7 @@ public class ShareService {
     }
 
     @Transactional
-    public Page < ShareDto > listDto ( @NotNull final UUID ticketId, @NotNull final Pageable pageable ) {
+    public Page < ShareDto > listByTicketIdDto ( @NotNull final UUID ticketId, @NotNull final Pageable pageable ) {
         return repository
                 .findAllByTicket ( ticketId, pageable )
                 .map ( mapper :: shareToShareDto );

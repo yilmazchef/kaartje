@@ -48,7 +48,7 @@ public class LikeService {
 
     @Transactional
     public Page < Like > list ( UUID ticketId, Pageable pageable ) {
-        return repository.findAllByTicketId ( ticketId, pageable );
+        return repository.findByTicket ( ticketId, pageable );
     }
 
     @Transactional
@@ -102,13 +102,18 @@ public class LikeService {
     @Transactional
     public Page < LikeDto > listByTicketIdDto ( @NotNull final UUID ticketId, @NotNull final Pageable pageable ) {
         return repository
-                .findAllByTicket_Id ( ticketId, pageable )
+                .findByTicket ( ticketId, pageable )
                 .map ( mapper :: likeToLikeDto );
     }
 
     @Transactional
     public int countDto ( ) {
         return ( int ) repository.count ( );
+    }
+
+    @Transactional
+    public int countByTicketDto ( @NotNull final UUID ticketId ) {
+        return ( int ) repository.countByTicket ( ticketId );
     }
 
 }

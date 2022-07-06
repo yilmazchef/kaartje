@@ -1,6 +1,5 @@
 package be.intecbrussel.views.home;
 
-import be.intecbrussel.data.dto.TicketDto;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Span;
@@ -8,8 +7,11 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import lombok.Getter;
+import org.hibernate.validator.constraints.URL;
 
 import javax.validation.constraints.NotEmpty;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class TicketLayout extends HorizontalLayout {
 
@@ -44,7 +46,15 @@ public class TicketLayout extends HorizontalLayout {
     private final Button shareButton = new Button ( );
 
 
-    public TicketLayout ( @NotEmpty final TicketDto ticketDto ) {
+    public TicketLayout (
+            @NotEmpty final String createdBy,
+            @NotEmpty final LocalDateTime datePublished,
+            @NotEmpty final String postContent,
+            @NotEmpty @URL final String imageUrl,
+            @NotEmpty final Integer likeCount,
+            @NotEmpty final Integer commentCount,
+            @NotEmpty final Integer shareCount
+    ) {
 
         addClassName ( "ticket-layout" );
         setSizeFull ( );
@@ -53,7 +63,7 @@ public class TicketLayout extends HorizontalLayout {
         setSpacing ( false );
         getThemeList ( ).add ( "spacing-s" );
 
-        image.setSrc ( ticketDto.getCreatedBy ( ).getProfilePictureUrl ( ) );
+        image.setSrc ( imageUrl );
 
         description.addClassName ( "description" );
         description.setSpacing ( false );
@@ -63,14 +73,18 @@ public class TicketLayout extends HorizontalLayout {
         header.setSpacing ( false );
         header.getThemeList ( ).add ( "spacing-s" );
 
-        name.setText ( ticketDto.getCreatedBy ( ).toString () );
+        name.setText ( createdBy );
         name.addClassName ( "name" );
 
-        date.setText ( ticketDto.getDate ( ) );
+        date.setText ( datePublished.format (
+                DateTimeFormatter.ofPattern (
+                        "dd-MM-yyyy HH:mm"
+                )
+        ) );
         date.addClassName ( "date" );
         header.add ( name, date );
 
-        post.setText ( ticketDto.getPost ( ) );
+        post.setText ( postContent );
         post.addClassName ( "post" );
 
         actions.addClassName ( "actions" );
@@ -81,21 +95,21 @@ public class TicketLayout extends HorizontalLayout {
         likeButton.setIcon ( likeIcon );
         likeButton.addClassName ( "icon" );
 
-        final var likes = new Span ( ticketDto.getLikes ( ) );
+        final var likes = new Span ( String.valueOf ( likeCount ) );
         likes.addClassName ( "likes" );
 
         final var commentIcon = VaadinIcon.COMMENT.create ( );
         commentButton.setIcon ( commentIcon );
         commentButton.addClassName ( "icon" );
 
-        final var comments = new Span ( ticketDto.getComments ( ) );
+        final var comments = new Span ( String.valueOf ( commentCount ) );
         comments.addClassName ( "comments" );
 
         final var shareIcon = VaadinIcon.CONNECT.create ( );
         shareButton.setIcon ( shareIcon );
         shareButton.addClassName ( "icon" );
 
-        final var shares = new Span ( ticketDto.getShares ( ) );
+        final var shares = new Span ( String.valueOf ( shareCount ) );
         shares.addClassName ( "shares" );
 
         actions.add ( likeButton, likes, commentButton, comments, shareButton, shares );
