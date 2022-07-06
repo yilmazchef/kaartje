@@ -1,6 +1,7 @@
 package be.intecbrussel.data.service;
 
 import be.intecbrussel.data.entity.User;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -10,14 +11,14 @@ import javax.transaction.Transactional;
 import java.util.Optional;
 import java.util.UUID;
 
+// LOMBOK
+@RequiredArgsConstructor
+// SPRING
 @Service
 public class UserService {
 
     private final UserRepository repository;
-
-    public UserService ( UserRepository repository ) {
-        this.repository = repository;
-    }
+    private final UserMapper mapper;
 
     @Transactional
     public Optional < User > get ( UUID id ) {

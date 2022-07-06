@@ -14,8 +14,7 @@ import java.util.UUID;
 
 // LOMBOK
 @RequiredArgsConstructor
-
-//SPRING BOOT
+// SPRING
 @Service
 public class TicketService {
 

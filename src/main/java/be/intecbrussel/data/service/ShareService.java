@@ -1,6 +1,7 @@
 package be.intecbrussel.data.service;
 
 import be.intecbrussel.data.entity.Share;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -10,14 +11,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+// LOMBOK
+@RequiredArgsConstructor
+// SPRING
 @Service
 public class ShareService {
 
     private final ShareRepository repository;
-
-    public ShareService(ShareRepository repository) {
-        this.repository = repository;
-    }
+    private final ShareMapper mapper;
 
     @Transactional
     public Optional<Share> get(UUID id) {

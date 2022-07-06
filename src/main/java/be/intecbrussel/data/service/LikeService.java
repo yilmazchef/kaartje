@@ -1,6 +1,7 @@
 package be.intecbrussel.data.service;
 
 import be.intecbrussel.data.entity.Like;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -9,14 +10,14 @@ import javax.transaction.Transactional;
 import java.util.Optional;
 import java.util.UUID;
 
+// LOMBOK
+@RequiredArgsConstructor
+// SPRING
 @Service
 public class LikeService {
 
     private final LikeRepository repository;
-
-    public LikeService ( LikeRepository repository ) {
-        this.repository = repository;
-    }
+    private final LikeMapper mapper;
 
     @Transactional
     public Optional < Like > get ( UUID id ) {
