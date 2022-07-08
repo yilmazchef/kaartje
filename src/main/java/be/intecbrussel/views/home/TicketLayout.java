@@ -51,9 +51,9 @@ public class TicketLayout extends HorizontalLayout {
             @NotEmpty final LocalDateTime datePublished,
             @NotEmpty final String postContent,
             @NotEmpty @URL final String imageUrl,
-            @NotEmpty final Integer likeCount,
-            @NotEmpty final Integer commentCount,
-            @NotEmpty final Integer shareCount
+            @NotEmpty final Long likeCount,
+            @NotEmpty final Long commentCount,
+            @NotEmpty final Long shareCount
     ) {
 
         addClassName ( "ticket-layout" );

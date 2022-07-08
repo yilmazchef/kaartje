@@ -4,7 +4,7 @@ import be.intecbrussel.data.dto.CategoryDto;
 import be.intecbrussel.data.entity.Category;
 import org.mapstruct.*;
 
-@Mapper ( unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring" )
+@Mapper ( componentModel = "spring" )
 public interface CategoryMapper {
     @Mapping ( source = "categoryId", target = "id" )
     Category categoryDtoToCategory ( CategoryDto categoryDto );

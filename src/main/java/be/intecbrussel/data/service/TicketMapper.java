@@ -4,7 +4,7 @@ import be.intecbrussel.data.dto.TicketDto;
 import be.intecbrussel.data.entity.Ticket;
 import org.mapstruct.*;
 
-@Mapper ( unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring" )
+@Mapper ( componentModel = "spring" )
 public interface TicketMapper {
     @Mapping ( source = "ticketId", target = "id" )
     Ticket ticketDtoToTicket ( TicketDto ticketDto );

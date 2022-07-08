@@ -138,4 +138,9 @@ public class CommentService {
         return ( int ) repository.count ( );
     }
 
+    @Transactional
+    public int countByTicketDto ( UUID ticketId ) {
+        return repository.countByTicket ( ticketId );
+    }
+
 }

@@ -141,4 +141,8 @@ public class ShareService {
         return ( int ) repository.count ( );
     }
 
+    public int countByTicketDto ( @NotNull final UUID ticketId ) {
+        return repository.countByTicket ( ticketId );
+    }
+
 }

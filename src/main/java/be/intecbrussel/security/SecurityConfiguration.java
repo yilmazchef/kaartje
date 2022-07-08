@@ -4,6 +4,7 @@ import be.intecbrussel.views.login.LoginView;
 import com.vaadin.flow.spring.security.VaadinWebSecurityConfigurerAdapter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -32,5 +33,9 @@ public class SecurityConfiguration extends VaadinWebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         super.configure(web);
         web.ignoring().antMatchers("/images/*.png");
+        web.ignoring ().antMatchers ( HttpMethod.POST, "/api/home/*" );
+        web.ignoring ().antMatchers ( HttpMethod.GET, "/api/home/*" );
+        web.ignoring ().antMatchers ( HttpMethod.PUT, "/api/home/*" );
+        web.ignoring ().antMatchers ( HttpMethod.DELETE, "/api/home/*" );
     }
 }

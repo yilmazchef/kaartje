@@ -4,7 +4,7 @@ import be.intecbrussel.data.dto.BoardDto;
 import be.intecbrussel.data.entity.Board;
 import org.mapstruct.*;
 
-@Mapper ( unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring" )
+@Mapper ( componentModel = "spring" )
 public interface BoardMapper {
     @Mapping ( source = "boardId", target = "id" )
     Board boardDtoToBoard ( BoardDto boardDto );

@@ -4,7 +4,7 @@ import be.intecbrussel.data.dto.CommentDto;
 import be.intecbrussel.data.entity.Comment;
 import org.mapstruct.*;
 
-@Mapper ( unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring" )
+@Mapper ( componentModel = "spring" )
 public interface CommentMapper {
     @Mapping ( source = "commentId", target = "id" )
     Comment commentDtoToComment ( CommentDto commentDto );

@@ -4,7 +4,7 @@ import be.intecbrussel.data.dto.UserDto;
 import be.intecbrussel.data.entity.User;
 import org.mapstruct.*;
 
-@Mapper ( unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring" )
+@Mapper ( componentModel = "spring" )
 public interface UserMapper {
     @Mapping ( source = "userId", target = "id" )
     User userDtoToUser ( UserDto userDto );

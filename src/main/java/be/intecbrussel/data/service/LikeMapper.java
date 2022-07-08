@@ -4,7 +4,7 @@ import be.intecbrussel.data.dto.LikeDto;
 import be.intecbrussel.data.entity.Like;
 import org.mapstruct.*;
 
-@Mapper ( unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring" )
+@Mapper ( componentModel = "spring" )
 public interface LikeMapper {
     @Mapping ( source = "likeId", target = "id" )
     Like likeDtoToLike ( LikeDto likeDto );

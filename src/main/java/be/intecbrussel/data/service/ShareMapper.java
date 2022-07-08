@@ -4,7 +4,7 @@ import be.intecbrussel.data.dto.ShareDto;
 import be.intecbrussel.data.entity.Share;
 import org.mapstruct.*;
 
-@Mapper ( unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = "spring" )
+@Mapper ( componentModel = "spring" )
 public interface ShareMapper {
     @Mapping ( source = "shareId", target = "id" )
     Share shareDtoToShare ( ShareDto shareDto );
