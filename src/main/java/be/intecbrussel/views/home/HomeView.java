@@ -8,22 +8,22 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.data.provider.DataProvider;
 import com.vaadin.flow.router.*;
+import com.vaadin.flow.server.auth.AnonymousAllowed;
 
-import javax.annotation.security.PermitAll;
 import java.text.MessageFormat;
 
 @PageTitle ( "Home" )
-@Route ( value = "home", layout = MainLayout.class )
+@Route ( value = HomeView.ROUTE, layout = MainLayout.class )
 @RouteAlias ( value = "", layout = MainLayout.class )
-@PermitAll
+@AnonymousAllowed
 public class HomeView extends Div implements AfterNavigationObserver {
 
-    private static final String ROUTE = "home";
+    public static final String ROUTE = "home";
     private final Grid < TicketDto > grid = new Grid <> ( );
 
     private final HomeClient client;
 
-    public HomeView ( HomeClient client ) {
+    public HomeView ( final HomeClient client ) {
         this.client = client;
 
         addClassName ( "home-view" );
