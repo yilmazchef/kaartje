@@ -22,7 +22,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 // SPRING
 @RestController
-@RequestMapping ( "/api/home" )
+@RequestMapping ( HomeEndpoints.HOME_BASE_END_POINT )
 public class HomeApi implements IHomeApi {
 
     private final TicketService ticketService;
@@ -32,57 +32,45 @@ public class HomeApi implements IHomeApi {
     private final ShareService shareService;
     private final CommentService commentService;
 
-    public static final String GET_TICKETS_END_POINT = "/tickets";
-    public static final String GET_LIKES_END_POINT = "/tickets/{ticket_id}/likes";
-    public static final String GET_SHARES_END_POINT = "/tickets/{ticket_id}/shares";
-    public static final String GET_COMMENTS_END_POINT = "/tickets/{ticket_id}/comments";
-    public static final String GET_TICKET_END_POINT = "/tickets/{ticket_id}";
-    public static final String GET_TICKET_LIKES_END_POINT = "/tickets/{ticket_id}/likes";
-    public static final String GET_TICKET_SHARES_END_POINT = "/tickets/{ticket_id}/shares";
-    public static final String GET_TICKET_COMMENTS_END_POINT = "/tickets/{ticket_id}/comments";
-    public static final String GET_TICKETS_COUNT_END_POINT = "/tickets/count";
-    public static final String GET_TICKET_LIKES_COUNT_END_POINT = "/tickets/{ticket_id}/likes/count";
-    public static final String GET_TICKET_SHARES_COUNT_END_POINT = "/tickets/{ticket_id}/shares/count";
-    public static final String GET_TICKET_COMMENTS_COUNT_END_POINT = "/tickets/{ticket_id}/comments/count";
 
     @Override
-    @GetMapping ( value = GET_TICKETS_END_POINT )
+    @GetMapping ( value = HomeEndpoints.GET_TICKETS_END_POINT )
     public List < TicketDto > getTickets ( @NotNull final int page, @NotNull final int size ) {
         return ticketService.listDto ( PageRequest.of ( page, size ) ).toList ();
     }
 
     @Override
-    @GetMapping ( value = GET_LIKES_END_POINT )
+    @GetMapping ( value = HomeEndpoints.GET_LIKES_END_POINT )
     public List < LikeDto > getLikes ( @NotNull final int page, @NotNull final int size, @NotNull @PathVariable ( "ticket_id" ) final UUID ticketId ) {
         return likeService.listByTicketIdDto ( ticketId, PageRequest.of ( page, size ) ).toList ();
     }
 
     @Override
-    @GetMapping ( value = GET_TICKET_LIKES_COUNT_END_POINT )
+    @GetMapping ( value = HomeEndpoints.GET_TICKET_LIKES_COUNT_END_POINT )
     public long getLikesCount ( @NotNull @PathVariable ( "ticket_id" ) final UUID ticketId ) {
         return likeService.countByTicketDto ( ticketId );
     }
 
     @Override
-    @GetMapping ( value = GET_SHARES_END_POINT )
+    @GetMapping ( value = HomeEndpoints.GET_SHARES_END_POINT )
     public List < ShareDto > getShares ( @RequestParam @NotNull final int page, @RequestParam @NotNull final int size, @NotNull @PathVariable ( "ticket_id" ) final UUID ticketId ) {
         return shareService.listByTicketIdDto ( ticketId, PageRequest.of ( page, size ) ).toList ();
     }
 
     @Override
-    @GetMapping ( value = GET_TICKET_SHARES_COUNT_END_POINT )
+    @GetMapping ( value = HomeEndpoints.GET_TICKET_SHARES_COUNT_END_POINT )
     public long getSharesCount ( @NotNull @PathVariable ( "ticket_id" ) final UUID ticketId ) {
         return shareService.countByTicketDto ( ticketId );
     }
 
     @Override
-    @GetMapping ( value = GET_COMMENTS_END_POINT )
+    @GetMapping ( value = HomeEndpoints.GET_COMMENTS_END_POINT )
     public List < CommentDto > getComments ( @RequestParam @NotNull final int page, @RequestParam @NotNull final int size, @NotNull @PathVariable ( "ticket_id" ) final UUID ticketId ) {
         return commentService.listByTicketIdDto ( ticketId, PageRequest.of ( page, size ) ).toList ();
     }
 
     @Override
-    @GetMapping ( value = GET_TICKET_COMMENTS_COUNT_END_POINT )
+    @GetMapping ( value = HomeEndpoints.GET_TICKET_COMMENTS_COUNT_END_POINT )
     public long getCommentsCount ( @NotNull @PathVariable ( "ticket_id" ) final UUID ticketId ) {
         return commentService.countByTicketDto ( ticketId );
     }

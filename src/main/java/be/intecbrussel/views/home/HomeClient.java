@@ -20,6 +20,8 @@ public class HomeClient implements Serializable, IHomeApi {
     @Value ( "${server.port}" )
     private String serverPort;
 
+    private final String baseUrl = "http://localhost:" + serverPort + HomeEndpoints.HOME_BASE_END_POINT;
+
     /**
      * Fetches the total number of items available through the REST API
      */
@@ -29,7 +31,7 @@ public class HomeClient implements Serializable, IHomeApi {
 
         // We use a local provider for this bigger data set.
         // The API has two methods, 'data' and 'count'.
-        final String url = String.format ( "http://localhost:" + serverPort + "api/home/count" );
+        final String url = baseUrl + HomeEndpoints.GET_TICKETS_COUNT_END_POINT;
 
         final RequestHeadersSpec < ? > spec = WebClient.create ( ).get ( ).uri ( url );
         final Integer response = spec.retrieve ( ).toEntity ( Integer.class ).block ( ).getBody ( );

@@ -1,0 +1,41 @@
+package be.intecbrussel.views.home;
+
+public class HomeEndpoints {
+    public static final String HOME_BASE_END_POINT = "/api/home";
+    public static final String GET_TICKETS_END_POINT = "/tickets";
+    public static final String GET_LIKES_END_POINT = "/tickets/{ticket_id}/likes";
+    public static final String GET_SHARES_END_POINT = "/tickets/{ticket_id}/shares";
+    public static final String GET_COMMENTS_END_POINT = "/tickets/{ticket_id}/comments";
+    public static final String GET_TICKET_END_POINT = "/tickets/{ticket_id}";
+    public static final String GET_TICKET_LIKES_END_POINT = "/tickets/{ticket_id}/likes";
+    public static final String GET_TICKET_SHARES_END_POINT = "/tickets/{ticket_id}/shares";
+    public static final String GET_TICKET_COMMENTS_END_POINT = "/tickets/{ticket_id}/comments";
+    public static final String GET_TICKETS_COUNT_END_POINT = "/tickets/count";
+    public static final String GET_TICKET_LIKES_COUNT_END_POINT = "/tickets/{ticket_id}/likes/count";
+    public static final String GET_TICKET_SHARES_COUNT_END_POINT = "/tickets/{ticket_id}/shares/count";
+    public static final String GET_TICKET_COMMENTS_COUNT_END_POINT = "/tickets/{ticket_id}/comments/count";
+    public static final String POST_TICKET_END_POINT = "/tickets/create";
+    public static final String POST_TICKET_LIKES_END_POINT = "/tickets/{ticket_id}/likes/create";
+    public static final String POST_TICKET_SHARES_END_POINT = "/tickets/{ticket_id}/shares/create";
+    public static final String POST_TICKET_COMMENTS_END_POINT = "/tickets/{ticket_id}/comments/create";
+    public static final String POST_TICKET_COMMENTS_REPLY_END_POINT = "/tickets/{ticket_id}/comments/{comment_id}/reply";
+    public static final String POST_TICKET_COMMENTS_REPLY_LIKES_END_POINT = "/tickets/{ticket_id}/comments/{comment_id}/likes/create";
+    public static final String POST_TICKET_COMMENTS_REPLY_SHARES_END_POINT = "/tickets/{ticket_id}/comments/{comment_id}/shares/create";
+    public static final String POST_TICKET_COMMENTS_REPLY_COMMENTS_END_POINT = "/tickets/{ticket_id}/comments/{comment_id}/comments/create";
+    public static final String PUT_TICKET_END_POINT = "/tickets/{ticket_id}/update";
+    public static final String PUT_TICKET_LIKES_END_POINT = "/tickets/{ticket_id}/likes/update";
+    public static final String PUT_TICKET_SHARES_END_POINT = "/tickets/{ticket_id}/shares/update";
+    public static final String PUT_TICKET_COMMENTS_END_POINT = "/tickets/{ticket_id}/comments/update";
+    public static final String PUT_TICKET_COMMENTS_REPLY_END_POINT = "/tickets/{ticket_id}/comments/{comment_id}/reply/update";
+    public static final String PUT_TICKET_COMMENTS_REPLY_LIKES_END_POINT = "/tickets/{ticket_id}/comments/{comment_id}/likes/update";
+    public static final String PUT_TICKET_COMMENTS_REPLY_SHARES_END_POINT = "/tickets/{ticket_id}/comments/{comment_id}/shares/update";
+    public static final String PUT_TICKET_COMMENTS_REPLY_COMMENTS_END_POINT = "/tickets/{ticket_id}/comments/{comment_id}/comments/update";
+    public static final String DELETE_TICKET_END_POINT = "/tickets/{ticket_id}/delete";
+    public static final String DELETE_TICKET_LIKES_END_POINT = "/tickets/{ticket_id}/likes/delete";
+    public static final String DELETE_TICKET_SHARES_END_POINT = "/tickets/{ticket_id}/shares/delete";
+    public static final String DELETE_TICKET_COMMENTS_END_POINT = "/tickets/{ticket_id}/comments/delete";
+    public static final String DELETE_TICKET_COMMENTS_REPLY_END_POINT = "/tickets/{ticket_id}/comments/{comment_id}/reply/delete";
+    public static final String DELETE_TICKET_COMMENTS_REPLY_LIKES_END_POINT = "/tickets/{ticket_id}/comments/{comment_id}/likes/delete";
+    public static final String DELETE_TICKET_COMMENTS_REPLY_SHARES_END_POINT = "/tickets/{ticket_id}/comments/{comment_id}/shares/delete";
+    public static final String DELETE_TICKET_COMMENTS_REPLY_COMMENTS_END_POINT = "/tickets/{ticket_id}/comments/{comment_id}/comments/delete";
+}
