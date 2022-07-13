@@ -1,13 +1,12 @@
-package be.intecbrussel.views.home;
+package be.intecbrussel.views.ticket;
 
-import be.intecbrussel.data.dto.CommentDto;
-import be.intecbrussel.data.dto.LikeDto;
-import be.intecbrussel.data.dto.ShareDto;
-import be.intecbrussel.data.dto.TicketDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClient.RequestHeadersSpec;
+
+import be.intecbrussel.data.entity.*;
+import be.intecbrussel.data.service.TicketService;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -15,12 +14,12 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class HomeClient implements Serializable, IHomeApi {
+public class TicketClient implements Serializable, ITicketApi {
 
     @Value ( "${server.port}" )
     private String serverPort;
 
-    private final String baseUrl = "http://localhost:" + serverPort + HomeEndpoints.HOME_BASE_END_POINT;
+    private final String baseUrl = "http://localhost:" + serverPort + TicketEndpoints.HOME_BASE_END_POINT;
 
     /**
      * Fetches the total number of items available through the REST API
@@ -31,7 +30,7 @@ public class HomeClient implements Serializable, IHomeApi {
 
         // We use a local provider for this bigger data set.
         // The API has two methods, 'data' and 'count'.
-        final String url = baseUrl + HomeEndpoints.GET_TICKETS_COUNT_END_POINT;
+        final String url = baseUrl + TicketEndpoints.GET_TICKETS_COUNT_END_POINT;
 
         final RequestHeadersSpec < ? > spec = WebClient.create ( ).get ( ).uri ( url );
         final Integer response = spec.retrieve ( ).toEntity ( Integer.class ).block ( ).getBody ( );
@@ -57,7 +56,7 @@ public class HomeClient implements Serializable, IHomeApi {
      * @return
      */
     @Override
-    public List < TicketDto > getTickets ( @NotNull final int page, @NotNull final int size ) {
+    public List < Ticket > getTickets ( @NotNull final int page, @NotNull final int size ) {
 
         System.out.println ( String.format ( "Fetching partial data set %d through %d...", size, page + size ) );
 
@@ -68,7 +67,7 @@ public class HomeClient implements Serializable, IHomeApi {
         final String url = String.format ( "http://localhost:" + serverPort + "/api/home/tickets/{ticket_id}/likes?page=%d&size=%d", page, size );
 
         final RequestHeadersSpec < ? > spec = WebClient.create ( ).get ( ).uri ( url );
-        final List < TicketDto > tickets = spec.retrieve ( ).toEntityList ( TicketDto.class ).block ( ).getBody ( );
+        final List < Ticket > tickets = spec.retrieve ( ).toEntityList ( Ticket.class ).block ( ).getBody ( );
 
         System.out.println ( String.format ( "...received %d items.", tickets.size ( ) ) );
 
@@ -82,7 +81,7 @@ public class HomeClient implements Serializable, IHomeApi {
      * @return
      */
     @Override
-    public List < LikeDto > getLikes ( @NotNull final int page, @NotNull final int size, @NotNull final UUID ticketId ) {
+    public List < Like > getLikes ( @NotNull final int page, @NotNull final int size, @NotNull final UUID ticketId ) {
         return null;
     }
 
@@ -102,7 +101,7 @@ public class HomeClient implements Serializable, IHomeApi {
      * @return
      */
     @Override
-    public List < ShareDto > getShares ( @NotNull final int page, @NotNull final int size, @NotNull final UUID ticketId ) {
+    public List < Share > getShares ( @NotNull final int page, @NotNull final int size, @NotNull final UUID ticketId ) {
         return null;
     }
 
@@ -122,7 +121,7 @@ public class HomeClient implements Serializable, IHomeApi {
      * @return
      */
     @Override
-    public List < CommentDto > getComments ( @NotNull final int page, @NotNull final int size, @NotNull final UUID ticketId ) {
+    public List < Comment > getComments ( @NotNull final int page, @NotNull final int size, @NotNull final UUID ticketId ) {
         return null;
     }
 
@@ -137,32 +136,32 @@ public class HomeClient implements Serializable, IHomeApi {
 
     /**
      * @param ticketId
-     * @param commentDto
+     * @param comment
      * @return
      */
     @Override
-    public CommentDto postComment ( @NotNull final UUID ticketId, @NotNull final CommentDto commentDto ) {
+    public Comment postComment ( @NotNull final UUID ticketId, @NotNull final Comment comment ) {
         return null;
     }
 
     /**
      * @param ticketId
      * @param commentId
-     * @param commentDto
+     * @param comment
      * @return
      */
     @Override
-    public CommentDto updateComment ( UUID ticketId, UUID commentId, CommentDto commentDto ) {
+    public Comment updateComment ( UUID ticketId, UUID commentId, Comment comment ) {
         return null;
     }
 
     /**
      * @param ticketId
-     * @param likeDto
+     * @param like
      * @return
      */
     @Override
-    public LikeDto likeTicket ( @NotNull UUID ticketId, LikeDto likeDto ) {
+    public Like likeTicket ( @NotNull UUID ticketId, Like like ) {
         return null;
     }
 
@@ -171,7 +170,7 @@ public class HomeClient implements Serializable, IHomeApi {
      * @return
      */
     @Override
-    public LikeDto likeTicket ( @NotNull UUID ticketId ) {
+    public Like likeTicket ( @NotNull UUID ticketId ) {
         return null;
     }
 
@@ -181,7 +180,7 @@ public class HomeClient implements Serializable, IHomeApi {
      * @return
      */
     @Override
-    public LikeDto deleteLike ( UUID ticketId, UUID likeId ) {
+    public Like deleteLike ( UUID ticketId, UUID likeId ) {
         return null;
     }
 }

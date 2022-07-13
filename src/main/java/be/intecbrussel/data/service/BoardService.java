@@ -21,11 +21,15 @@ import java.util.UUID;
 public class BoardService {
 
     private final BoardRepository repository;
-    private final BoardMapper mapper;
 
     @Transactional
     public Optional < Board > get ( UUID id ) {
         return repository.findById ( id );
+    }
+
+    @Transactional
+    public Board create ( Board entity ) {
+        return repository.save ( entity );
     }
 
     @Transactional
@@ -45,42 +49,6 @@ public class BoardService {
 
     @Transactional
     public int count ( ) {
-        return ( int ) repository.count ( );
-    }
-
-
-    // DTO SERVICES
-
-    @Transactional
-    public Optional < BoardDto > getDto ( @NotEmpty final UUID id ) {
-        return repository
-                .findById ( id )
-                .map ( mapper :: boardToBoardDto );
-    }
-
-    @Transactional
-    public BoardDto updateDto ( BoardDto dto ) {
-        return mapper.boardToBoardDto (
-                repository.save (
-                        mapper.boardDtoToBoard ( dto )
-                )
-        );
-    }
-
-    @Transactional
-    public void deleteDto ( @NotEmpty final UUID id ) {
-        repository.deleteById ( id );
-    }
-
-    @Transactional
-    public Page < BoardDto > listDto ( @NotNull Pageable pageable ) {
-        return repository
-                .findAll ( pageable )
-                .map ( mapper :: boardToBoardDto );
-    }
-
-    @Transactional
-    public int countDto ( ) {
         return ( int ) repository.count ( );
     }
 

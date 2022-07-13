@@ -19,7 +19,6 @@ import java.util.UUID;
 public class TicketService {
 
     private final TicketRepository repository;
-    private final TicketMapper mapper;
 
     @Transactional
     public Optional < Ticket > get ( UUID id ) {
@@ -27,24 +26,8 @@ public class TicketService {
     }
 
     @Transactional
-    public Optional < TicketDto > getDTO ( final UUID id ) {
-        return repository
-                .findById ( id )
-                .map ( mapper :: ticketToTicketDto );
-    }
-
-
-    @Transactional
     public Ticket getOne ( UUID id ) {
         return repository.getReferenceById ( id );
-    }
-
-    @Transactional
-    public TicketDto getOneDTO ( UUID id ) {
-        return mapper.ticketToTicketDto (
-                repository
-                        .getReferenceById ( id )
-        );
     }
 
     @Transactional
@@ -52,12 +35,6 @@ public class TicketService {
         return repository.save ( entity );
     }
 
-    @Transactional
-    public TicketDto createDTO ( TicketDto dto ) {
-        return mapper.ticketToTicketDto ( repository.save (
-                mapper.ticketDtoToTicket ( dto )
-        ) );
-    }
 
     @Transactional
     public Ticket update ( Ticket entity ) {
@@ -65,18 +42,7 @@ public class TicketService {
     }
 
     @Transactional
-    public TicketDto updateDTO ( TicketDto dto ) {
-        return mapper.ticketToTicketDto ( repository.save (
-                mapper.ticketDtoToTicket ( dto )
-        ) );
-    }
-    @Transactional
     public void delete ( @NotNull final UUID id ) {
-        repository.deleteById ( id );
-    }
-
-    @Transactional
-    public void deleteDTO ( @NotNull final UUID id ) {
         repository.deleteById ( id );
     }
 
@@ -86,20 +52,9 @@ public class TicketService {
     }
 
     @Transactional
-    public Page < TicketDto > listDto ( Pageable pageable ) {
-        return repository
-                .findAll ( pageable )
-                .map ( mapper :: ticketToTicketDto );
-    }
-
-    @Transactional
     public int count ( ) {
         return ( int ) repository.count ( );
     }
 
-    @Transactional
-    public int countDTO ( ) {
-        return ( int ) repository.count ( );
-    }
 
 }

@@ -21,11 +21,15 @@ import java.util.stream.Collectors;
 public class CommentService {
 
     private final CommentRepository repository;
-    private final CommentMapper mapper;
 
     @Transactional
     public Optional < Comment > get ( UUID id ) {
         return repository.findById ( id );
+    }
+
+    @Transactional
+    public Comment create ( Comment entity ) {
+        return repository.save ( entity );
     }
 
     @Transactional
@@ -63,84 +67,10 @@ public class CommentService {
         return ( int ) repository.count ( );
     }
 
-    // DTO SERVICES
 
     @Transactional
-    public Optional < CommentDto > getDto ( UUID id ) {
-
-        return repository
-                .findById ( id )
-                .map ( mapper :: commentToCommentDto );
-    }
-
-    @Transactional
-    public CommentDto createDto ( CommentDto dto ) {
-        return
-                mapper.commentToCommentDto (
-                        repository.save (
-                                mapper.commentDtoToComment ( dto )
-                        )
-                );
-    }
-
-    @Transactional
-    public CommentDto updateDto ( CommentDto dto ) {
-        return
-                mapper.commentToCommentDto (
-                        repository.save (
-                                mapper.commentDtoToComment ( dto )
-                        )
-                );
-    }
-
-    @Transactional
-    public void deleteDto ( @NotNull final UUID id ) {
-        repository.deleteById ( id );
-    }
-
-    @Transactional
-    public Page < CommentDto > pagesDto ( @NotNull final Pageable pageable ) {
-
-        return repository
-                .findAll ( pageable )
-                .map ( mapper :: commentToCommentDto );
-    }
-
-    @Transactional
-    public List < CommentDto > listDto ( ) {
-
-        return repository
-                .findAllActive ( )
-                .stream ( )
-                .map ( mapper :: commentToCommentDto )
-                .collect ( Collectors.toUnmodifiableList ( ) );
-    }
-
-    @Transactional
-    public Page < CommentDto > listByTicketIdDto ( UUID ticketId, Pageable pageable ) {
-        return repository
-                .findAllByTicket ( ticketId, pageable )
-                .map ( mapper :: commentToCommentDto );
-    }
-
-    @Transactional
-    public List < CommentDto > listDto ( @NotNull final UUID ticketId ) {
-
-        return repository
-                .findAllByTicket ( ticketId )
-                .stream ( )
-                .map ( mapper :: commentToCommentDto )
-                .collect ( Collectors.toUnmodifiableList ( ) );
-    }
-
-    @Transactional
-    public int countDto ( ) {
-        return ( int ) repository.count ( );
-    }
-
-    @Transactional
-    public int countByTicketDto ( UUID ticketId ) {
-        return repository.countByTicket ( ticketId );
+    public int countByTicket( UUID ticketId ) {
+        return ( int ) repository.countByTicket ( ticketId );
     }
 
 }

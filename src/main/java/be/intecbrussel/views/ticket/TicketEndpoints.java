@@ -1,6 +1,6 @@
-package be.intecbrussel.views.home;
+package be.intecbrussel.views.ticket;
 
-public class HomeEndpoints {
+public class TicketEndpoints {
     public static final String HOME_BASE_END_POINT = "/api/home";
     public static final String GET_TICKETS_END_POINT = "/tickets";
     public static final String GET_LIKES_END_POINT = "/tickets/{ticket_id}/likes";

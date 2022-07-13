@@ -1,4 +1,4 @@
-package be.intecbrussel.views.home;
+package be.intecbrussel.views.ticket;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Image;
@@ -51,9 +51,9 @@ public class TicketLayout extends HorizontalLayout {
             @NotEmpty final LocalDateTime datePublished,
             @NotEmpty final String postContent,
             @NotEmpty @URL final String imageUrl,
-            @NotEmpty final Long likeCount,
-            @NotEmpty final Long commentCount,
-            @NotEmpty final Long shareCount
+            @NotEmpty final int likeCount,
+            @NotEmpty final int commentCount,
+            @NotEmpty final int shareCount
     ) {
 
         addClassName ( "ticket-layout" );

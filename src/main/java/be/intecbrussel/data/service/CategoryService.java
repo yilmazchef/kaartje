@@ -19,11 +19,15 @@ import java.util.UUID;
 public class CategoryService {
 
     private final CategoryRepository repository;
-    private final CategoryMapper mapper;
 
     @Transactional
     public Optional < Category > get ( UUID id ) {
         return repository.findById ( id );
+    }
+
+    @Transactional
+    public Category create ( Category entity ) {
+        return repository.save ( entity );
     }
 
     @Transactional
@@ -47,41 +51,5 @@ public class CategoryService {
     }
 
 
-    // DTO SERVICES
-
-    @Transactional
-    public Optional < CategoryDto > getDto ( @NotNull final UUID id ) {
-
-        return repository
-                .findById ( id )
-                .map ( mapper :: categoryToCategoryDto );
-    }
-
-    @Transactional
-    public CategoryDto updateDto ( CategoryDto dto ) {
-
-        return mapper.categoryToCategoryDto (
-                repository.save (
-                        mapper.categoryDtoToCategory ( dto )
-                ) );
-    }
-
-    @Transactional
-    public void deleteDto ( @NotNull final UUID id ) {
-        repository.deleteById ( id );
-    }
-
-    @Transactional
-    public Page < CategoryDto > listDto ( @NotNull final Pageable pageable ) {
-
-        return repository
-                .findAll ( pageable )
-                .map ( mapper :: categoryToCategoryDto );
-    }
-
-    @Transactional
-    public int countDto ( ) {
-        return ( int ) repository.count ( );
-    }
 
 }

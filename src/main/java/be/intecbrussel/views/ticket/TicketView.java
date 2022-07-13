@@ -1,73 +1,58 @@
 package be.intecbrussel.views.ticket;
 
-import be.intecbrussel.data.dto.TicketDto;
+import be.intecbrussel.data.entity.*;
+import be.intecbrussel.data.service.CommentService;
+import be.intecbrussel.data.service.LikeService;
+import be.intecbrussel.data.service.ShareService;
+import be.intecbrussel.data.service.TicketService;
 import be.intecbrussel.views.MainLayout;
-import com.vaadin.flow.component.grid.Grid;
-import com.vaadin.flow.component.grid.GridVariant;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.notification.Notification;
-import com.vaadin.flow.data.provider.DataProvider;
-import com.vaadin.flow.router.*;
+import com.vaadin.flow.router.AfterNavigationEvent;
+import com.vaadin.flow.router.AfterNavigationObserver;
+import com.vaadin.flow.router.PageTitle;
+import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
+import org.springframework.data.domain.PageRequest;
 
-import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.List;
 
-@PageTitle ( "Home" )
-@Route ( value = HomeView.ROUTE, layout = MainLayout.class )
-@RouteAlias ( value = "", layout = MainLayout.class )
+@PageTitle ( "Ticket" )
+@Route ( value = TicketView.ROUTE, layout = MainLayout.class )
 @AnonymousAllowed
-public class HomeView extends Div implements AfterNavigationObserver {
+public class TicketView extends Div implements AfterNavigationObserver {
 
-    public static final String ROUTE = "home";
-    private final Grid < TicketDto > grid = new Grid <> ( );
+    public static final String ROUTE = "ticket";
+    private final TicketService ticketService;
+    private final LikeService likeService;
+    private final CommentService commentService;
+    private final ShareService shareService;
 
-    private final HomeClient client;
+    private final List < Ticket > tickets = new ArrayList <> ( );
 
-    public HomeView ( final HomeClient client ) {
-        this.client = client;
+    public TicketView ( final TicketService ticketService, LikeService likeService, CommentService commentService, ShareService shareService ) {
+        this.ticketService = ticketService;
+        this.likeService = likeService;
+        this.commentService = commentService;
+        this.shareService = shareService;
 
-        addClassName ( "home-view" );
+        addClassName ( "ticket-view" );
         setSizeFull ( );
 
-        this.grid.setHeight ( "100%" );
-        this.grid.addThemeVariants ( GridVariant.LUMO_NO_BORDER, GridVariant.LUMO_NO_ROW_BORDERS );
-        this.grid.addComponentColumn ( dto -> {
-
-            final var likesCount = this.client.getLikesCount ( dto.getTicketId ( ) );
-            final var sharesCount = this.client.getSharesCount ( dto.getTicketId ( ) );
-            final var commentsCount = this.client.getCommentsCount ( dto.getTicketId ( ) );
-
+        for ( Ticket ticket : tickets ) {
+            final var ticketId = ticket.getId();
             final var ticketLayout = new TicketLayout (
-                    dto.getCreatedBy ( ).getUsername ( ),
-                    dto.getCreatedAt ( ),
-                    dto.getMessage ( ),
-                    dto.getCreatedBy ( ).getProfilePictureUrl ( ),
-                    likesCount, sharesCount, commentsCount
+                    ticket.getCreatedBy ( ).getUsername ( ),
+                    ticket.getCreatedAt ( ),
+                    ticket.getMessage ( ),
+                    ticket.getCreatedBy ( ).getProfilePictureUrl ( ),
+                    likeService.countByTicket ( ticketId ),
+                    shareService.countByTicket ( ticketId ),
+                    commentService.countByTicket ( ticketId )
             );
+            add(ticketLayout);
+        }
 
-            ticketLayout.getLikeButton ( ).addClickListener ( onClick -> {
-                final var likeCreated = this.client.likeTicket ( dto.getTicketId ( ) );
-
-                if ( likeCreated != null ) {
-                    Notification.show (
-                            MessageFormat.format (
-                                    "{0} liked the ticket from {1}",
-                                    likeCreated.getCreatedBy ( ).getUsername ( ),
-                                    dto.getCreatedBy ( ).getUsername ( )
-                            )
-                            , 3000, Notification.Position.MIDDLE
-                    );
-                } else {
-                    Notification.show ( "You have already liked this ticket before." );
-                }
-
-
-            } );
-
-            return ticketLayout;
-        } );
-
-        this.add ( this.grid );
     }
 
     @Override
@@ -79,12 +64,9 @@ public class HomeView extends Div implements AfterNavigationObserver {
         final var page = Integer.parseInt ( oPage.orElse ( "0" ) );
         final var size = Integer.parseInt ( oSize.orElse ( "25" ) );
 
-        final var ticketBinders = DataProvider.fromStream (
-                this.client.getTickets ( page, size ).stream ( ) );
-
-
-        this.grid.setItems ( ticketBinders );
-
+        this.tickets.addAll (
+                this.ticketService.list ( PageRequest.of ( page, size ) ).toList ( )
+        );
     }
 
 }
