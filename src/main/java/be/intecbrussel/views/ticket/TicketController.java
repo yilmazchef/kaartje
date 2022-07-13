@@ -132,8 +132,8 @@ public class TicketController implements ITicketApi {
             );
         }
 
-        comment.getTicket ( ).setTicketId ( ticketId );
-        comment.getCreatedBy ( ).setUserId ( authenticatedUser.get ( ).get ( ).getId ( ) );
+        comment.getTicket ( ).setId ( ticketId );
+        comment.getCreatedBy ( ).setId ( authenticatedUser.get ( ).get ( ).getId ( ) );
         return commentService.update ( comment );
     }
 
@@ -154,7 +154,7 @@ public class TicketController implements ITicketApi {
     @PostMapping ( value = "tickets/{ticket_id}/likes/create/quick" )
     public Like likeTicket ( @PathVariable ( "ticket_id" ) @NotNull final UUID ticketId ) {
 
-        final var oTicket = ticketService.getDTO ( ticketId );
+        final var oTicket = ticketService.get ( ticketId );
         if ( oTicket.isEmpty ( ) ) {
             throw new ResponseStatusException (
                     org.springframework.http.HttpStatus.BAD_REQUEST,
@@ -224,7 +224,7 @@ public class TicketController implements ITicketApi {
 
         if ( ! Objects.equals (
                 authenticatedUser.get ( ).get ( ).getId ( ),
-                like.getCreatedBy ( ).getUserId ( ) )
+                like.getCreatedBy ( ).getId ( ) )
         ) {
             throw new ResponseStatusException (
                     org.springframework.http.HttpStatus.UNAUTHORIZED,
