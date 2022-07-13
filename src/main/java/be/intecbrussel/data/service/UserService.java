@@ -1,7 +1,6 @@
 package be.intecbrussel.data.service;
 
 import be.intecbrussel.data.Role;
-import be.intecbrussel.data.dto.UserDto;
 import be.intecbrussel.data.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

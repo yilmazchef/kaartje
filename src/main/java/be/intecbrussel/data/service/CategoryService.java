@@ -1,6 +1,5 @@
 package be.intecbrussel.data.service;
 
-import be.intecbrussel.data.dto.CategoryDto;
 import be.intecbrussel.data.entity.Category;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

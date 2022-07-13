@@ -1,6 +1,5 @@
 package be.intecbrussel.data.service;
 
-import be.intecbrussel.data.dto.CommentDto;
 import be.intecbrussel.data.entity.Comment;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

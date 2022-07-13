@@ -1,6 +1,5 @@
 package be.intecbrussel.data.service;
 
-import be.intecbrussel.data.dto.TicketDto;
 import be.intecbrussel.data.entity.Ticket;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
